@@ -145,7 +145,7 @@ public class UserDao extends AbstractDao<User> {
     }
 
     @Override
-    public int create(User user) throws SQLException {
+    public int createUser(User user) throws SQLException {
         int result;
 
         preparedStatement = getPreparedStatement(CREATE_USER);

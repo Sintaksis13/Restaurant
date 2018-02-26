@@ -8,7 +8,7 @@ public final class EncodingFilter implements Filter {
 
     private static final String ENCODING_INIT_PARAM_NAME = "requestEncoding";
 
-    public static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+    private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
     private String encoding;
 

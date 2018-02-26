@@ -29,7 +29,7 @@ public class RegisterCommand implements ActionCommand {
 
         UserAction userAction = new UserAction();
         if (userAction.authorizeUser(login, email) && login != null && password != null && email != null) {
-            User user = getUser(login, password, email, phoneNumber);
+            User user = fillUpUser(login, password, email, phoneNumber);
 
             int result = userAction.registerUser(user);
 
@@ -37,23 +37,25 @@ public class RegisterCommand implements ActionCommand {
                 request.setAttribute(SUCCESS, SUCCESS_MESSAGE);
                 request.getRequestDispatcher(INDEX_PAGE).forward(request, response);
             } else {
-               sentFailMessage(request, response);
+               sendFailMessage(request, response);
             }
         } else {
-            sentFailMessage(request, response);
+            sendFailMessage(request, response);
         }
     }
 
-    private User getUser(String login, String password, String email, String phoneNumber) {
+    private User fillUpUser(String login, String password, String email, String phoneNumber) {
         User user = new User();
+
         user.setLogin(login);
         user.setPassword(password);
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
+
         return user;
     }
 
-    private void sentFailMessage(HttpServletRequest request, HttpServletResponse response)
+    private void sendFailMessage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute(FAIL, FAIL_MESSAGE);
 

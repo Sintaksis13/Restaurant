@@ -29,7 +29,7 @@ public class AddDishCommand implements ActionCommand {
         double price = Double.parseDouble(request.getParameter(DISH_PRICE));
 
         if (dishAction.findDish(name) == null) {
-            Dish dish = getDish(name, description, price);
+            Dish dish = fetchDish(name, description, price);
 
             dishAction.addNewDish(dish);
 
@@ -45,7 +45,7 @@ public class AddDishCommand implements ActionCommand {
         request.getRequestDispatcher(DISH_EDIT_PAGE).forward(request, response);
     }
 
-    private Dish getDish(String name, String description, double price) {
+    private Dish fetchDish(String name, String description, double price) {
         Dish dish = new Dish();
 
         dish.setName(name);

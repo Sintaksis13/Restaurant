@@ -89,7 +89,7 @@ public class TableDao extends AbstractDao<Table> {
     }
 
     @Override
-    public int create(Table table) throws SQLException{
+    public int createUser(Table table) throws SQLException{
         preparedStatement = getPreparedStatement(CREATE_TABLE);
         preparedStatement.setInt(SECOND, table.getSeatsNumber());
         if (table.getValue().toString().equalsIgnoreCase(TableType.VIP.toString())) {

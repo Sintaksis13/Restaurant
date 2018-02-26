@@ -148,7 +148,7 @@ public class UserService extends AbstractService<User> {
         int result = UNCHANGED_ROWS;
 
         try {
-            result = userDao.create(user);
+            result = userDao.createUser(user);
         } catch (SQLException ex) {
             LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }

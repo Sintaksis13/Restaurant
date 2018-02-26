@@ -8,6 +8,7 @@ import com.epam.validator.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,11 +20,9 @@ import static com.epam.constants.PageConstants.VIEW_USERS_PAGE;
 public class ViewUsersCommand implements ActionCommand {
     private static final String USERS = "users";
 
-    private static final Logger LOGGER = Logger.getLogger(AcceptChangeCommand.class);
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = getUser(request);
+        User user = ActionCommand.fetchUser(request.getCookies());
 
         if (user != null) {
             List<User> userList = new UserAction().getUserList();
@@ -32,16 +31,5 @@ public class ViewUsersCommand implements ActionCommand {
 
             request.getRequestDispatcher(VIEW_USERS_PAGE).forward(request, response);
         }
-    }
-
-    private User getUser(HttpServletRequest request) {
-        User user = null;
-
-        try {
-            user = new Validator().checkCookie(request.getCookies());
-        } catch (CookieNotFoundException ex) {
-            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
-        }
-        return user;
     }
 }

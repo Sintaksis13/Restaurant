@@ -7,9 +7,6 @@ import com.epam.entity.Table;
 import com.epam.entity.User;
 import com.epam.entity.type.TableStatus;
 import com.epam.entity.type.TableType;
-import com.epam.exception.CookieNotFoundException;
-import com.epam.validator.Validator;
-import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-import static com.epam.constants.ExceptionConstants.COOKIE_NOT_FOUND_EXCEPTION;
 import static com.epam.constants.NameConstants.FAIL;
 import static com.epam.constants.NameConstants.SUCCESS;
 import static com.epam.constants.PageConstants.INDEX_PAGE;
@@ -32,13 +28,11 @@ public class AcceptReserveCommand implements ActionCommand {
     private static final String RESERVE_TIME = "time";
     private static final String TABLE_VALUE = "tableValue";
 
-    private static final Logger LOGGER = Logger.getLogger(AcceptChangeCommand.class);
-
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = getUser(request);
+        User user = ActionCommand.fetchUser(request.getCookies());
 
         if (user != null) {
-            Table wantedTable = getTable(request);
+            Table wantedTable = fillUpTable(request);
 
             int reserveResult = new TableAction().reserveTable(wantedTable);
 
@@ -57,18 +51,7 @@ public class AcceptReserveCommand implements ActionCommand {
         }
     }
 
-    private User getUser(HttpServletRequest request) {
-        User user = null;
-
-        try {
-            user = new Validator().checkCookie(request.getCookies());
-        } catch (CookieNotFoundException ex) {
-            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
-        }
-        return user;
-    }
-
-    private Table getTable(HttpServletRequest request) {
+    private Table fillUpTable(HttpServletRequest request) {
         Table wantedTable = new Table();
 
         wantedTable.setSeatsNumber(Integer.parseInt(request.getParameter(SEATS_NUMBER)));

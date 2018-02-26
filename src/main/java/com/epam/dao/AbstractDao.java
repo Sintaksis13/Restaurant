@@ -20,7 +20,7 @@ public abstract class AbstractDao<E> {
     }
 
     public abstract List<E> getAll() throws SQLException;
-    public abstract int create(E entity) throws SQLException;
+    public abstract int createUser(E entity) throws SQLException;
 
     protected int delete(int id, String sql) throws SQLException {
         PreparedStatement preparedStatement = getPreparedStatement(sql);

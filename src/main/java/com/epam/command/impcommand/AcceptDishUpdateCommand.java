@@ -25,7 +25,7 @@ public class AcceptDishUpdateCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String oldName = request.getParameter(OLD_NAME);
 
-        Dish dish = getDish(request);
+        Dish dish = fetchDish(request);
 
         DishAction dishAction = new DishAction();
 
@@ -42,7 +42,7 @@ public class AcceptDishUpdateCommand implements ActionCommand {
         request.getRequestDispatcher(DISH_EDIT_PAGE).forward(request, response);
     }
 
-    private Dish getDish(HttpServletRequest request) {
+    private Dish fetchDish(HttpServletRequest request) {
         String name = request.getParameter(DISH_NAME);
         String description = request.getParameter(DISH_DESC);
         double price = Double.parseDouble(request.getParameter(DISH_PRICE));

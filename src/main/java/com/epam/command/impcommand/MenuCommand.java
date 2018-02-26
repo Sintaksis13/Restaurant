@@ -28,23 +28,12 @@ public class MenuCommand implements ActionCommand {
 
         request.setAttribute(DISHES, dishList);
 
-        User user = getUser(request);
+        User user = ActionCommand.fetchUser(request.getCookies());
 
         if (user != null && user.getRole().toString().equalsIgnoreCase(Role.ADMIN.toString())) {
             request.getRequestDispatcher(DISH_EDIT_PAGE).forward(request, response);
         } else {
             request.getRequestDispatcher(MENU_PAGE).forward(request, response);
         }
-    }
-
-    private User getUser(HttpServletRequest request) {
-        User user = null;
-
-        try {
-            user = new Validator().checkCookie(request.getCookies());
-        } catch (CookieNotFoundException ex) {
-            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
-        }
-        return user;
     }
 }
