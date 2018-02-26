@@ -7,7 +7,7 @@ import java.util.Map;
 
 public final class ActionFactory {
 
-    private static Map<String, ActionCommand> actionMap = new HashMap<>();
+    private static final Map<String, ActionCommand> actionMap = new HashMap<>();
 
     private ActionFactory() {
         super();

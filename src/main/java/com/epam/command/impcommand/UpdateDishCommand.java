@@ -16,7 +16,7 @@ import static com.epam.constants.PageConstants.DISH_EDIT_PAGE;
 import static com.epam.constants.PageConstants.DISH_UPDATE_PAGE;
 
 public class UpdateDishCommand implements ActionCommand {
-    public static final String FAIL_MESSAGE = ResourceBundle.getBundle("language")
+    private static final String FAIL_MESSAGE = ResourceBundle.getBundle("language")
                                                             .getString("update_dish_fail_message");
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

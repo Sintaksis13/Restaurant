@@ -62,8 +62,7 @@ public class TableDao extends AbstractDao<Table> {
         return tableList;
     }
 
-    public int update(Table table) throws SQLException {
-        int result;
+    public void update(Table table) throws SQLException {
         preparedStatement = getPreparedStatement(UPDATE_TABLE);
         preparedStatement.setInt(FIRST, table.getSeatsNumber());
         if (table.getValue().toString().equalsIgnoreCase(TableType.VIP.toString())) {
@@ -76,12 +75,10 @@ public class TableDao extends AbstractDao<Table> {
         preparedStatement.setInt(FIFTH, table.getId());
 
         try {
-            result = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         } finally {
             closePreparedStatement(preparedStatement);
         }
-
-        return result;
     }
 
     public int delete(int id) throws SQLException {

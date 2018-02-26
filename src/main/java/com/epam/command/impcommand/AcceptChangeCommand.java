@@ -28,7 +28,7 @@ public class AcceptChangeCommand implements ActionCommand {
         User user = ActionCommand.fetchUser(request.getCookies());
 
         if (user != null) {
-            user = fillUpUser(request, response, user, EMAIL, PHONE_NUMBER);
+            user = fillUpUser(request, response, user);
 
             if (new UserAction().changeUserInfo(user) != UNCHANGED_ROWS) {
                 request.setAttribute(USER, user);
@@ -48,8 +48,8 @@ public class AcceptChangeCommand implements ActionCommand {
         }
     }
 
-    private User fillUpUser(HttpServletRequest request, HttpServletResponse response,
-                            User user, String email, String phoneNumber) throws ServletException, IOException {
+    private User fillUpUser(HttpServletRequest request, HttpServletResponse response, User user)
+            throws ServletException, IOException {
         if (request.getParameter(OLD_PASSWORD).isEmpty() && request.getParameter(NEW_PASSWORD).isEmpty()) {
             user.setPassword(user.getPassword());
         } else if (!new UserAction().authenticateUser(user.getLogin(), request.getParameter(OLD_PASSWORD))) {
@@ -63,8 +63,8 @@ public class AcceptChangeCommand implements ActionCommand {
         } else {
             user.setPassword(request.getParameter(NEW_PASSWORD));
         }
-        user.setEmail(request.getParameter(email));
-        user.setPhoneNumber(request.getParameter(phoneNumber));
+        user.setEmail(request.getParameter(EMAIL));
+        user.setPhoneNumber(request.getParameter(PHONE_NUMBER));
 
         return user;
     }

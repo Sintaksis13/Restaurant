@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.epam.constants.NameConstants.*;
+import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 import static com.epam.constants.PageConstants.DISH_EDIT_PAGE;
 
 public class AddDishCommand implements ActionCommand {
@@ -31,9 +32,9 @@ public class AddDishCommand implements ActionCommand {
         if (dishAction.findDish(name) == null) {
             Dish dish = fetchDish(name, description, price);
 
-            dishAction.addNewDish(dish);
-
-            request.setAttribute(MESSAGE, SUCCESS_MESSAGE);
+            if (dishAction.addNewDish(dish) != UNCHANGED_ROWS) {
+                request.setAttribute(MESSAGE, SUCCESS_MESSAGE);
+            }
         } else {
             request.setAttribute(MESSAGE, FAIL_MESSAGE);
         }
