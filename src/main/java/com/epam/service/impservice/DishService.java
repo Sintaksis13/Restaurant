@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static com.epam.constants.ExceptionConstants.SQL_EXCEPTION;
-import static com.epam.constants.NumericConstants.START_VALUE;
+import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 
 public class DishService extends AbstractService<Dish>{
     private Connection connection = AbstractService.getConnectionPool().getConnection();
@@ -35,7 +35,7 @@ public class DishService extends AbstractService<Dish>{
     }
 
     public int update(Dish dish, String name) {
-        int result = START_VALUE;
+        int result = UNCHANGED_ROWS;
 
         try {
             result = dishDao.update(dish, name);
@@ -48,7 +48,7 @@ public class DishService extends AbstractService<Dish>{
 
     @Override
     public int delete(int id) {
-        int result = START_VALUE;
+        int result = UNCHANGED_ROWS;
 
         try {
             result = dishDao.delete(id);
@@ -61,7 +61,7 @@ public class DishService extends AbstractService<Dish>{
 
     @Override
     public int create(Dish dish) {
-        int result = START_VALUE;
+        int result = UNCHANGED_ROWS;
 
         try {
             result = dishDao.create(dish);

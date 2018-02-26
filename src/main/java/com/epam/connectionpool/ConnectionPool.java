@@ -33,16 +33,10 @@ public class ConnectionPool {
         try {
             Driver driver = (Driver) Class.forName(driverName).newInstance();
             DriverManager.registerDriver(driver);
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            if (ex.getClass().equals(SQLException.class)) {
-                LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
-            } else if (ex.getClass().equals(ClassNotFoundException.class)) {
-                LOGGER.warn(CLASS_NOT_FOUND_EXCEPTION + ex.getMessage());
-            } else if (ex.getClass().equals(InstantiationException.class)) {
-                LOGGER.warn(INSTANTIATION_EXCEPTION + ex.getMessage());
-            } else {
-                LOGGER.warn(ILLEGAL_ACCESS_EXCEPTION + ex.getMessage());
-            }
+        } catch (SQLException ex) {
+            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+        } catch (ReflectiveOperationException ex) {
+            LOGGER.warn(REFLECTIVE_OPERATION_EXCEPTION + ex.getMessage());
         }
     }
 

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import static com.epam.constants.NameConstants.*;
-import static com.epam.constants.NumericConstants.START_VALUE;
+import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 import static com.epam.constants.PageConstants.INDEX_PAGE;
 import static com.epam.constants.PageConstants.REGISTER_PAGE;
 
@@ -29,27 +29,34 @@ public class RegisterCommand implements ActionCommand {
 
         UserAction userAction = new UserAction();
         if (userAction.authorizeUser(login, email) && login != null && password != null && email != null) {
-            User user = new User();
-            user.setLogin(login);
-            user.setPassword(password);
-            user.setEmail(email);
-            user.setPhoneNumber(phoneNumber);
+            User user = getUser(login, password, email, phoneNumber);
 
             int result = userAction.registerUser(user);
 
-            if (result != START_VALUE) {
+            if (result != UNCHANGED_ROWS) {
                 request.setAttribute(SUCCESS, SUCCESS_MESSAGE);
-
                 request.getRequestDispatcher(INDEX_PAGE).forward(request, response);
             } else {
-                request.setAttribute(FAIL, FAIL_MESSAGE);
-
-                request.getRequestDispatcher(REGISTER_PAGE).forward(request, response);
+               sentFailMessage(request, response);
             }
         } else {
-            request.setAttribute(FAIL, FAIL_MESSAGE);
-
-            request.getRequestDispatcher(REGISTER_PAGE).forward(request, response);
+            sentFailMessage(request, response);
         }
+    }
+
+    private User getUser(String login, String password, String email, String phoneNumber) {
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        return user;
+    }
+
+    private void sentFailMessage(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute(FAIL, FAIL_MESSAGE);
+
+        request.getRequestDispatcher(REGISTER_PAGE).forward(request, response);
     }
 }

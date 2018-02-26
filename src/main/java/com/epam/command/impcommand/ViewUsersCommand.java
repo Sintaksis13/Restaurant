@@ -23,13 +23,7 @@ public class ViewUsersCommand implements ActionCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = null;
-
-        try {
-            user = new Validator().checkCookie(request.getCookies());
-        } catch (CookieNotFoundException ex) {
-            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
-        }
+        User user = getUser(request);
 
         if (user != null) {
             List<User> userList = new UserAction().getUserList();
@@ -38,5 +32,16 @@ public class ViewUsersCommand implements ActionCommand {
 
             request.getRequestDispatcher(VIEW_USERS_PAGE).forward(request, response);
         }
+    }
+
+    private User getUser(HttpServletRequest request) {
+        User user = null;
+
+        try {
+            user = new Validator().checkCookie(request.getCookies());
+        } catch (CookieNotFoundException ex) {
+            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
+        }
+        return user;
     }
 }

@@ -19,6 +19,16 @@ public class ReserveCommand implements ActionCommand {
     private static final Logger LOGGER = Logger.getLogger(AcceptChangeCommand.class);
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = getUser(request);
+
+        if (user != null) {
+            request.getRequestDispatcher(RESERVE_PAGE).forward(request, response);
+        } else {
+            response.sendRedirect(INDEX_PAGE);
+        }
+    }
+
+    private User getUser(HttpServletRequest request) {
         User user = null;
 
         try {
@@ -26,11 +36,6 @@ public class ReserveCommand implements ActionCommand {
         } catch (CookieNotFoundException ex) {
             LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
         }
-
-        if (user != null) {
-            request.getRequestDispatcher(RESERVE_PAGE).forward(request, response);
-        } else {
-            response.sendRedirect(INDEX_PAGE);
-        }
+        return user;
     }
 }

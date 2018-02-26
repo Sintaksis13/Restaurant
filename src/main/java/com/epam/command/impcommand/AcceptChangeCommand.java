@@ -8,7 +8,6 @@ import com.epam.validator.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.ResourceBundle;
 
 import static com.epam.constants.ExceptionConstants.COOKIE_NOT_FOUND_EXCEPTION;
 import static com.epam.constants.NameConstants.*;
-import static com.epam.constants.NumericConstants.START_VALUE;
+import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 import static com.epam.constants.PageConstants.*;
 
 public class AcceptChangeCommand implements ActionCommand {
@@ -32,18 +31,18 @@ public class AcceptChangeCommand implements ActionCommand {
     private static final Logger LOGGER = Logger.getLogger(AcceptChangeCommand.class);
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = getUser(request.getCookies());
+        User user = getUser(request);
 
         if (user != null) {
             user = setUser(request, response, user, EMAIL, PHONE_NUMBER);
 
-            if (new UserAction().changeUserInfo(user) != START_VALUE) {
+            if (new UserAction().changeUserInfo(user) != UNCHANGED_ROWS) {
                 request.setAttribute(USER, user);
                 request.setAttribute(SUCCESS, SUCCESS_MESSAGE);
 
                 request.getRequestDispatcher(ACCOUNT_PAGE).forward(request, response);
             } else {
-                User failedUser = getUser(request.getCookies());
+                User failedUser = getUser(request);
 
                 request.setAttribute(FAIL, EMAIL_FAIL_MESSAGE);
                 request.setAttribute(USER, failedUser);
@@ -55,11 +54,11 @@ public class AcceptChangeCommand implements ActionCommand {
         }
     }
 
-    private User getUser(Cookie[] cookies) {
+    private User getUser(HttpServletRequest request) {
         User user = null;
 
         try {
-            user = new Validator().checkCookie(cookies);
+            user = new Validator().checkCookie(request.getCookies());
         } catch (CookieNotFoundException ex) {
             LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
         }
@@ -74,7 +73,7 @@ public class AcceptChangeCommand implements ActionCommand {
         } else if (!new UserAction().authenticateUser(user.getLogin(), request.getParameter(OLD_PASSWORD))) {
             request.setAttribute(FAIL, PASSWORD_FAIL_MESSAGE);
 
-            User failedUser = getUser(request.getCookies());
+            User failedUser = getUser(request);
 
             request.setAttribute(USER, failedUser);
 

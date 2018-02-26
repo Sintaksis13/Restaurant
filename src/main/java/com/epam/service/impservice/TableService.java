@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.epam.constants.ExceptionConstants.SQL_EXCEPTION;
-import static com.epam.constants.NumericConstants.START_VALUE;
+import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 
 public class TableService extends AbstractService<Table> {
     private static final Logger LOGGER = Logger.getLogger(TableService.class);
@@ -40,7 +40,7 @@ public class TableService extends AbstractService<Table> {
 
     public int reserve(Table wantedTable) {
         List<Table> tableList = new LinkedList<>();
-        int tableId = START_VALUE;
+        int tableId = UNCHANGED_ROWS;
 
         try {
             tableList = tableDao.getAll();
@@ -69,7 +69,7 @@ public class TableService extends AbstractService<Table> {
 
     @Override
     public int delete(int id) {
-        int result = START_VALUE;
+        int result = UNCHANGED_ROWS;
 
         try {
             result = tableDao.delete(id);
@@ -82,7 +82,7 @@ public class TableService extends AbstractService<Table> {
 
     @Override
     public int create(Table table) {
-        int result = START_VALUE;
+        int result = UNCHANGED_ROWS;
 
         try {
             result = tableDao.create(table);

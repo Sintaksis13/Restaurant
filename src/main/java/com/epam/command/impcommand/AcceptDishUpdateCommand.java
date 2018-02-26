@@ -3,7 +3,6 @@ package com.epam.command.impcommand;
 import com.epam.action.DishAction;
 import com.epam.command.ActionCommand;
 import com.epam.entity.Dish;
-import com.epam.service.impservice.DishService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,20 +19,13 @@ public class AcceptDishUpdateCommand implements ActionCommand {
                                                                 .getString("dish_update_success_message");
     private static final String FAIL_MESSAGE = ResourceBundle.getBundle("language")
                                                              .getString("dish_update_fail_message");
-    public static final String OLD_NAME = "oldDishName";
+    private static final String OLD_NAME = "oldDishName";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter(DISH_NAME);
-        String description = request.getParameter(DISH_DESC);
         String oldName = request.getParameter(OLD_NAME);
-        double price = Double.parseDouble(request.getParameter(DISH_PRICE));
 
-        Dish dish = new Dish();
-
-        dish.setName(name);
-        dish.setDescription(description);
-        dish.setPrice(price);
+        Dish dish = getDish(request);
 
         DishAction dishAction = new DishAction();
 
@@ -48,5 +40,18 @@ public class AcceptDishUpdateCommand implements ActionCommand {
         request.setAttribute(DISHES, dishes);
 
         request.getRequestDispatcher(DISH_EDIT_PAGE).forward(request, response);
+    }
+
+    private Dish getDish(HttpServletRequest request) {
+        String name = request.getParameter(DISH_NAME);
+        String description = request.getParameter(DISH_DESC);
+        double price = Double.parseDouble(request.getParameter(DISH_PRICE));
+
+        Dish dish = new Dish();
+
+        dish.setName(name);
+        dish.setDescription(description);
+        dish.setPrice(price);
+        return dish;
     }
 }

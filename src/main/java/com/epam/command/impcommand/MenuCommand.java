@@ -28,6 +28,16 @@ public class MenuCommand implements ActionCommand {
 
         request.setAttribute(DISHES, dishList);
 
+        User user = getUser(request);
+
+        if (user != null && user.getRole().toString().equalsIgnoreCase(Role.ADMIN.toString())) {
+            request.getRequestDispatcher(DISH_EDIT_PAGE).forward(request, response);
+        } else {
+            request.getRequestDispatcher(MENU_PAGE).forward(request, response);
+        }
+    }
+
+    private User getUser(HttpServletRequest request) {
         User user = null;
 
         try {
@@ -35,11 +45,6 @@ public class MenuCommand implements ActionCommand {
         } catch (CookieNotFoundException ex) {
             LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
         }
-
-        if (user != null && user.getRole().toString().equalsIgnoreCase(Role.ADMIN.toString())) {
-            request.getRequestDispatcher(DISH_EDIT_PAGE).forward(request, response);
-        } else {
-            request.getRequestDispatcher(MENU_PAGE).forward(request, response);
-        }
+        return user;
     }
 }

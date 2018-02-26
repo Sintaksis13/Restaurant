@@ -1,7 +1,7 @@
 package com.epam.constants;
 
 public class NumericConstants {
-    public static final int START_VALUE = 0;
+    public static final int UNCHANGED_ROWS = 0;
     public static final int FIRST = 1;
     public static final int SECOND = 2;
     public static final int THIRD = 3;

@@ -20,13 +20,7 @@ public class RoomCommand implements ActionCommand {
     private static final Logger LOGGER = Logger.getLogger(AcceptChangeCommand.class);
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = null;
-
-        try {
-            user = new Validator().checkCookie(request.getCookies());
-        } catch (CookieNotFoundException ex) {
-            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
-        }
+        User user = getUser(request);
 
         if (user != null) {
             request.setAttribute(USER, user);
@@ -34,5 +28,16 @@ public class RoomCommand implements ActionCommand {
         } else {
             request.getRequestDispatcher(INDEX_PAGE).forward(request, response);
         }
+    }
+
+    private User getUser(HttpServletRequest request) {
+        User user = null;
+
+        try {
+            user = new Validator().checkCookie(request.getCookies());
+        } catch (CookieNotFoundException ex) {
+            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
+        }
+        return user;
     }
 }

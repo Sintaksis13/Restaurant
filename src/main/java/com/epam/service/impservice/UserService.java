@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static com.epam.constants.ExceptionConstants.SQL_EXCEPTION;
-import static com.epam.constants.NumericConstants.START_VALUE;
+import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 
 public class UserService extends AbstractService<User> {
     private static final Logger LOGGER = Logger.getLogger(UserService.class);
@@ -108,7 +108,7 @@ public class UserService extends AbstractService<User> {
     }
 
     public int updateUserInfo(User user) {
-        int result = START_VALUE;
+        int result = UNCHANGED_ROWS;
 
         try {
             if (userDao.findUserByEmail(user.getEmail()) == null
@@ -132,7 +132,7 @@ public class UserService extends AbstractService<User> {
 
     @Override
     public int delete(int id) {
-        int result = START_VALUE;
+        int result = UNCHANGED_ROWS;
 
         try {
             result = userDao.delete(id);
@@ -145,7 +145,7 @@ public class UserService extends AbstractService<User> {
 
     @Override
     public int create(User user) {
-        int result = START_VALUE;
+        int result = UNCHANGED_ROWS;
 
         try {
             result = userDao.create(user);

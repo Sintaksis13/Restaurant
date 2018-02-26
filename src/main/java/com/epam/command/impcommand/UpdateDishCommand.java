@@ -29,7 +29,6 @@ public class UpdateDishCommand implements ActionCommand {
             request.getRequestDispatcher(DISH_UPDATE_PAGE).forward(request, response);
         } else {
             request.setAttribute(MESSAGE, FAIL_MESSAGE);
-
             request.getRequestDispatcher(DISH_EDIT_PAGE).forward(request, response);
         }
     }

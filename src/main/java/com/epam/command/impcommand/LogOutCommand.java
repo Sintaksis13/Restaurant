@@ -20,13 +20,7 @@ public class LogOutCommand implements ActionCommand {
 
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User user = null;
-
-        try {
-            user = new Validator().checkCookie(request.getCookies());
-        } catch (CookieNotFoundException ex) {
-            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
-        }
+        User user = getUser(request);
 
         if (user != null) {
             for (Cookie cookie: request.getCookies()) {
@@ -39,5 +33,16 @@ public class LogOutCommand implements ActionCommand {
         }
 
         response.sendRedirect(INDEX_PAGE);
+    }
+
+    private User getUser(HttpServletRequest request) {
+        User user = null;
+
+        try {
+            user = new Validator().checkCookie(request.getCookies());
+        } catch (CookieNotFoundException ex) {
+            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
+        }
+        return user;
     }
 }
