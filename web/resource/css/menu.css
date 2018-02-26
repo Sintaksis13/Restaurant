@@ -1,0 +1,19 @@
+body {
+    background: #ffffff;
+}
+table {
+    text-align: center;
+    border: 6px ridge;
+    padding: 10px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width:100%
+}
+td {
+    word-wrap:break-word;
+    border: 4px ridge;
+}
+tr {
+    text-align: center;
+    height: 50px;
+}
