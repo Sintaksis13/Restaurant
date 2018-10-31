@@ -4,7 +4,8 @@ import com.epam.dao.impdao.TableDao;
 import com.epam.entity.Table;
 import com.epam.entity.type.TableStatus;
 import com.epam.service.AbstractService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ import static com.epam.constants.ExceptionConstants.SQL_EXCEPTION;
 import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 
 public class TableService extends AbstractService<Table> {
-    private static final Logger LOGGER = Logger.getLogger(TableService.class);
+    private static final Logger LOGGER = LogManager.getLogger(TableService.class);
 
     private Connection connection = AbstractService.getConnectionPool().getConnection();
 
@@ -48,12 +49,12 @@ public class TableService extends AbstractService<Table> {
             LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
-        for (Table tab: tableList) {
-            if (tab.getStatus() == TableStatus.ACTIVE && tab.getSeatsNumber() == wantedTable.getSeatsNumber()
-                    && tab.getReservationTime() != wantedTable.getReservationTime()) {
-                wantedTable.setId(tab.getId());
-                tableId = tab.getId();
-                
+        for (Table table: tableList) {
+            if (table.getStatus() == TableStatus.ACTIVE && table.getSeatsNumber() == wantedTable.getSeatsNumber()
+                    && table.getReservationTime() != wantedTable.getReservationTime()) {
+                wantedTable.setId(table.getId());
+                tableId = table.getId();
+
                 try {
                     tableDao.update(wantedTable);
                 } catch (SQLException ex) {

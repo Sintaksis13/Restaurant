@@ -1,6 +1,7 @@
 package com.epam.connectionpool;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -19,7 +20,7 @@ public class ConnectionPool {
     private String user;
     private String password;
 
-    private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
+    private static final Logger LOG = LogManager.getLogger(ConnectionPool.class);
 
     private ConnectionPool(String driverName, String url, String user, String password) {
         this.driverName = driverName;
@@ -34,9 +35,9 @@ public class ConnectionPool {
             Driver driver = (Driver) Class.forName(driverName).newInstance();
             DriverManager.registerDriver(driver);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION, ex.getMessage());
         } catch (ReflectiveOperationException ex) {
-            LOGGER.warn(REFLECTIVE_OPERATION_EXCEPTION + ex.getMessage());
+            LOG.warn(REFLECTIVE_OPERATION_EXCEPTION, ex.getMessage());
         }
     }
 
@@ -58,7 +59,7 @@ public class ConnectionPool {
                     con = getConnection();
                 }
             } catch (SQLException ex) {
-                LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+                LOG.warn(SQL_EXCEPTION, ex.getMessage());
                 con = getConnection();
             }
         } else {
@@ -76,7 +77,7 @@ public class ConnectionPool {
                 con = DriverManager.getConnection(url, user, password);
             }
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION, ex.getMessage());
             con = null;
         }
         return con;
