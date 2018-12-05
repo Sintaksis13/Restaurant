@@ -1,17 +1,17 @@
 package com.epam.dao;
 
-import org.apache.log4j.Logger;
+import com.epam.dao.idao.IDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
-import static com.epam.constants.ExceptionConstants.SQL_EXCEPTION;
 import static com.epam.constants.NumericConstants.FIRST;
 
-public abstract class AbstractDao<E> {
-    private static final Logger LOGGER = Logger.getLogger(AbstractDao.class);
+public abstract class AbstractDao<E> implements IDao<E> {
+    private static final Logger LOG = LogManager.getLogger(AbstractDao.class);
 
     private final Connection connection;
 
@@ -19,11 +19,9 @@ public abstract class AbstractDao<E> {
         this.connection = connection;
     }
 
-    public abstract List<E> getAll() throws SQLException;
-    public abstract int createUser(E entity) throws SQLException;
-
-    protected int delete(int id, String sql) throws SQLException {
-        PreparedStatement preparedStatement = getPreparedStatement(sql);
+    @Override
+    public int delete(int id, String sqlStatement) throws SQLException {
+        PreparedStatement preparedStatement = getPreparedStatement(sqlStatement);
         preparedStatement.setInt(FIRST, id);
         int result;
 
@@ -36,23 +34,25 @@ public abstract class AbstractDao<E> {
         return result;
     }
 
-    protected PreparedStatement getPreparedStatement(String sql) {
+    protected PreparedStatement getPreparedStatement(String sqlStatement) {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sqlStatement);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn("Preparing statement with sqlStatement={} was failed. Error message: {}", sqlStatement, ex.getMessage());
         }
 
+        LOG.debug("Getting preparedStatement={} with sqlStatement={}", preparedStatement, sqlStatement);
         return preparedStatement;
     }
 
     protected void closePreparedStatement(PreparedStatement preparedStatement) {
         if (preparedStatement != null) {
             try {
+                LOG.debug("Try to close preparedStatement={}", preparedStatement);
                 preparedStatement.close();
             } catch (SQLException ex) {
-                LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+                LOG.warn("Cannot close preparedStatement={}. Error message: {}", preparedStatement, ex.getMessage());
             }
         }
     }

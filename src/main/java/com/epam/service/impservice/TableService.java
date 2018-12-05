@@ -85,7 +85,7 @@ public class TableService extends AbstractService<Table> {
         int result = UNCHANGED_ROWS;
 
         try {
-            result = tableDao.createUser(table);
+            result = tableDao.create(table);
         } catch (SQLException ex) {
             LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }

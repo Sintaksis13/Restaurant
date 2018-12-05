@@ -6,6 +6,8 @@ import com.epam.entity.User;
 import com.epam.entity.type.Role;
 import com.epam.entity.type.TableStatus;
 import com.epam.entity.type.TableType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +19,9 @@ import java.util.List;
 import static com.epam.constants.NumericConstants.*;
 
 public class UserDao extends AbstractDao<User> {
-    private static final String GET_ALL_USERS = "select * from public.\"USER\" left join public.\"TABLE\" on " +
+    private static final Logger LOG = LogManager.getLogger(UserDao.class);
+
+    private static final String SELECT_ALL_USERS = "select * from public.\"USER\" left join public.\"TABLE\" on " +
             "public.\"USER\".\"Table_ID\"\n = public.\"TABLE\".\"Table_ID\";";
     private static final String FIND_USER_BY_LOGIN = "select * from public.\"USER\" left join public.\"TABLE\" on " +
             "public.\"USER\".\"Table_ID\"\n = public.\"TABLE\".\"Table_ID\" where \"Login\" = ?";
@@ -41,7 +45,7 @@ public class UserDao extends AbstractDao<User> {
 
     @Override
     public List<User> getAll() throws SQLException {
-        preparedStatement = getPreparedStatement(GET_ALL_USERS);
+        preparedStatement = getPreparedStatement(SELECT_ALL_USERS);
         List<User> userList = new LinkedList<>();
         User user;
 
@@ -73,9 +77,10 @@ public class UserDao extends AbstractDao<User> {
         return userList;
     }
 
-    public User findByLogin(String name) throws SQLException {
+    public User findByLogin(String login) throws SQLException {
+        LOG.debug("Try to find user with login = {}", login);
         preparedStatement = getPreparedStatement(FIND_USER_BY_LOGIN);
-        preparedStatement.setString(FIRST, name);
+        preparedStatement.setString(FIRST, login);
         User user = null;
 
         try(ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -145,7 +150,7 @@ public class UserDao extends AbstractDao<User> {
     }
 
     @Override
-    public int createUser(User user) throws SQLException {
+    public int create(User user) throws SQLException {
         int result;
 
         preparedStatement = getPreparedStatement(CREATE_USER);

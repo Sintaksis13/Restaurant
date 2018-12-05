@@ -100,8 +100,6 @@ public class UserService extends AbstractService<User> {
             if (user == null) {
                 result = true;
             }
-        } else {
-            result = false;
         }
 
         return result;
@@ -148,7 +146,7 @@ public class UserService extends AbstractService<User> {
         int result = UNCHANGED_ROWS;
 
         try {
-            result = userDao.createUser(user);
+            result = userDao.create(user);
         } catch (SQLException ex) {
             LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }

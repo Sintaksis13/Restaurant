@@ -73,7 +73,7 @@ public class DishDao extends AbstractDao<Dish> {
     }
 
     @Override
-    public int createUser(Dish dish) throws SQLException {
+    public int create(Dish dish) throws SQLException {
         int result;
 
         preparedStatement = getPreparedStatement(CREATE_DISH);

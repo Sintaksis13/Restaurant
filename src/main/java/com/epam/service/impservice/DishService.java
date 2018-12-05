@@ -64,7 +64,7 @@ public class DishService extends AbstractService<Dish>{
         int result = UNCHANGED_ROWS;
 
         try {
-            result = dishDao.createUser(dish);
+            result = dishDao.create(dish);
         } catch (SQLException ex) {
             LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }
