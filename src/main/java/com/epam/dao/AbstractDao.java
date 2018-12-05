@@ -1,7 +1,6 @@
 package com.epam.dao;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +11,7 @@ import static com.epam.constants.ExceptionConstants.SQL_EXCEPTION;
 import static com.epam.constants.NumericConstants.FIRST;
 
 public abstract class AbstractDao<E> {
-    private static final Logger LOG = LogManager.getLogger(AbstractDao.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractDao.class);
 
     private final Connection connection;
 
@@ -42,7 +41,7 @@ public abstract class AbstractDao<E> {
         try {
             preparedStatement = connection.prepareStatement(sql);
         } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION, ex.getMessage());
+            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return preparedStatement;
@@ -53,7 +52,7 @@ public abstract class AbstractDao<E> {
             try {
                 preparedStatement.close();
             } catch (SQLException ex) {
-                LOG.warn(SQL_EXCEPTION, ex.getMessage());
+                LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
             }
         }
     }
