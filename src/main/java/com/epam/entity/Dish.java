@@ -1,9 +1,18 @@
 package com.epam.entity;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Dish extends BaseEntity {
     private String name;
     private String description;
     private double price;
+
+    public Dish(String name, String description, double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 
     @Override
     public String toString() {

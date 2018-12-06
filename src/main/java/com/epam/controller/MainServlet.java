@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/MainServlet")
 public final class MainServlet extends HttpServlet {
@@ -16,6 +17,8 @@ public final class MainServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(30 * 60);
         ActionCommand actionCommand = ActionFactory.getCommand(request.getParameter("actionCommand"));
         LOG.debug("Processing command: {}", actionCommand);
         try {
