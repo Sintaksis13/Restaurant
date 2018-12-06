@@ -1,7 +1,6 @@
 package com.epam.entity;
 
 public class Dish extends BaseEntity {
-
     private String name;
     private String description;
     private double price;

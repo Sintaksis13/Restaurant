@@ -13,7 +13,6 @@ import java.util.List;
 import static com.epam.constants.NumericConstants.*;
 
 public class DishDao extends AbstractDao<Dish> {
-
     private static final String SELECT_ALL_DISHES = "select * from public.\"DISH\"";
     private static final String UPDATE_DISH = "update public.\"DISH\" set \"Name\" = ?, " +
             "\"Description\" = ?, \"Price\" = ? where \"Name\" = ?";
@@ -21,7 +20,6 @@ public class DishDao extends AbstractDao<Dish> {
     private static final String CREATE_DISH = "insert into public.\"DISH\" (\"Name\", " +
             "\"Description\", \"Price\") VALUES (?, ?, ?)";
     private static final String FIND_DISH_BY_NAME = "select * from public.\"DISH\" where \"Name\" = ?";
-
 
     private PreparedStatement preparedStatement = null;
 
@@ -52,13 +50,11 @@ public class DishDao extends AbstractDao<Dish> {
 
     public int update(Dish dish, String name) throws SQLException {
         int result;
-
         preparedStatement = getPreparedStatement(UPDATE_DISH);
         preparedStatement.setString(FIRST, dish.getName());
         preparedStatement.setString(SECOND, dish.getDescription());
         preparedStatement.setDouble(THIRD, dish.getPrice());
         preparedStatement.setString(FOURTH, name);
-
         try {
             result = preparedStatement.executeUpdate();
         } finally {

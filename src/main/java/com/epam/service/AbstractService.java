@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public abstract class AbstractService<E> {
-
     private static final ConnectionPool connectionPool;
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
     private static final String url = resourceBundle.getString("URL");

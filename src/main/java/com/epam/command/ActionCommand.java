@@ -3,7 +3,8 @@ package com.epam.command;
 import com.epam.entity.User;
 import com.epam.exception.CookieNotFoundException;
 import com.epam.validator.Validator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import static com.epam.constants.ExceptionConstants.COOKIE_NOT_FOUND_EXCEPTION;
 
 public interface ActionCommand {
-    Logger LOGGER = Logger.getLogger(ActionCommand.class);
+    Logger LOG = LogManager.getLogger(ActionCommand.class);
 
     void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
@@ -24,7 +25,7 @@ public interface ActionCommand {
         try {
             user = new Validator().checkCookie(cookies);
         } catch (CookieNotFoundException ex) {
-            LOGGER.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
+            LOG.warn(COOKIE_NOT_FOUND_EXCEPTION + ex.getMessage());
         }
 
         return user;

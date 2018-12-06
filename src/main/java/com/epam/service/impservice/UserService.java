@@ -3,7 +3,8 @@ package com.epam.service.impservice;
 import com.epam.dao.impdao.UserDao;
 import com.epam.entity.User;
 import com.epam.service.AbstractService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import static com.epam.constants.ExceptionConstants.SQL_EXCEPTION;
 import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 
 public class UserService extends AbstractService<User> {
-    private static final Logger LOGGER = Logger.getLogger(UserService.class);
+    private static final Logger LOG = LogManager.getLogger(UserService.class);
 
     private Connection connection = AbstractService.getConnectionPool().getConnection();
 
@@ -30,7 +31,7 @@ public class UserService extends AbstractService<User> {
         try {
             userList = userDao.getAll();
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return userList;
@@ -42,7 +43,7 @@ public class UserService extends AbstractService<User> {
         try {
             user = userDao.findByLogin(login);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return user;
@@ -54,7 +55,7 @@ public class UserService extends AbstractService<User> {
         try {
             user = userDao.findByLogin(login);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return user != null ? user.getRole().toString() : null;
@@ -68,13 +69,13 @@ public class UserService extends AbstractService<User> {
         try {
             user = userDao.findByLogin(login);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         try {
             result = (user != null && userDao.checkUserPassword(login, password));
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return result;
@@ -87,14 +88,14 @@ public class UserService extends AbstractService<User> {
         try {
             user = userDao.findByLogin(login);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         if (user == null) {
             try {
                 user = userDao.findUserByEmail(email);
             } catch (SQLException ex) {
-                LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+                LOG.warn(SQL_EXCEPTION + ex.getMessage());
             }
 
             if (user == null) {
@@ -114,7 +115,7 @@ public class UserService extends AbstractService<User> {
                 result = userDao.update(user);
             } 
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return result;
@@ -124,7 +125,7 @@ public class UserService extends AbstractService<User> {
         try {
             userDao.update(user);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
     }
 
@@ -135,7 +136,7 @@ public class UserService extends AbstractService<User> {
         try {
             result = userDao.delete(id);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return result;
@@ -148,7 +149,7 @@ public class UserService extends AbstractService<User> {
         try {
             result = userDao.create(user);
         } catch (SQLException ex) {
-            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
+            LOG.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return result;

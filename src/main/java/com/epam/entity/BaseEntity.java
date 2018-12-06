@@ -1,7 +1,6 @@
 package com.epam.entity;
 
 public abstract class BaseEntity {
-
     private int id;
 
     @Override
