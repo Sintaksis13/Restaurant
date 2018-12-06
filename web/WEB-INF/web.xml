@@ -16,7 +16,7 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <servlet>
+    <!--<servlet>
         <display-name>MainServlet</display-name>
         <servlet-name>MainServlet</servlet-name>
         <servlet-class>com.epam.controller.MainServlet</servlet-class>
@@ -24,7 +24,7 @@
     <servlet-mapping>
         <servlet-name>MainServlet</servlet-name>
         <url-pattern>/MainServlet</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <servlet>
         <servlet-name>index</servlet-name>
         <jsp-file>/index.jsp</jsp-file>

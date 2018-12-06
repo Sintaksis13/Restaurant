@@ -5,11 +5,8 @@ import java.io.IOException;
 
 public final class EncodingFilter implements Filter {
     private static final String ENCODING_DEFAULT = "UTF-8";
-
     private static final String ENCODING_INIT_PARAM_NAME = "requestEncoding";
-
     private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
-
     private String encoding;
 
     public void init(FilterConfig filterConfig) {
@@ -27,7 +24,6 @@ public final class EncodingFilter implements Filter {
 
         servletResponse.setContentType(CONTENT_TYPE);
         servletRequest.setCharacterEncoding(ENCODING_DEFAULT);
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
