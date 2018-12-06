@@ -4,27 +4,6 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <display-name>Restaurant</display-name>
-    <filter>
-        <filter-name>EncodingFilter</filter-name>
-        <filter-class>com.epam.filter.EncodingFilter</filter-class>
-        <init-param>
-            <param-name>requestEncoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>EncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!--<servlet>
-        <display-name>MainServlet</display-name>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>com.epam.controller.MainServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/MainServlet</url-pattern>
-    </servlet-mapping>-->
     <servlet>
         <servlet-name>index</servlet-name>
         <jsp-file>/index.jsp</jsp-file>

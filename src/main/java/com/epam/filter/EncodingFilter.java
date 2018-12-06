@@ -1,8 +1,11 @@
 package com.epam.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+@WebFilter(urlPatterns = "/*", initParams = {@WebInitParam(name = "requestEncoding", value = "UTF-8")})
 public final class EncodingFilter implements Filter {
     private static final String ENCODING_DEFAULT = "UTF-8";
     private static final String ENCODING_INIT_PARAM_NAME = "requestEncoding";

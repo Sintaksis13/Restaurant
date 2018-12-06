@@ -5,15 +5,10 @@ import com.epam.command.ActionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-import static com.epam.constants.ExceptionConstants.IO_EXCEPTION;
-import static com.epam.constants.ExceptionConstants.SERVLET_EXCEPTION;
 
 @WebServlet("/MainServlet")
 public final class MainServlet extends HttpServlet {
@@ -25,12 +20,8 @@ public final class MainServlet extends HttpServlet {
         LOG.debug("Processing command: {}", actionCommand);
         try {
             actionCommand.execute(request, response);
-        } catch (ServletException | IOException ex) {
-            if (ex.getClass().equals(ServletException.class)) {
-                LOG.warn(SERVLET_EXCEPTION + ex.getMessage());
-            } else {
-                LOG.warn(IO_EXCEPTION + ex.getMessage());
-            }
+        } catch (Exception ex) {
+            LOG.error("An error occurred during processing command: {} , error: {}", actionCommand, ex.getMessage());
         }
     }
 
