@@ -1,6 +1,6 @@
 package com.epam.entity;
 
-public abstract class BaseEntity {
+public abstract class BaseEntity<T> {
     private int id;
 
     @Override
@@ -8,8 +8,9 @@ public abstract class BaseEntity {
         return getClass().getName() + " " + id;
     }
 
-    public void setId(int id) {
+    public T setId(int id) {
         this.id = id;
+        return (T) this;
     }
 
     public int getId() {

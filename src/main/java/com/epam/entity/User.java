@@ -2,7 +2,7 @@ package com.epam.entity;
 
 import com.epam.entity.type.Role;
 
-public class User extends BaseEntity {
+public class User extends BaseEntity<User> {
     private String login;
     private String password;
     private String email;

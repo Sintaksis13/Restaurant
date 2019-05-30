@@ -1,9 +1,6 @@
 package com.epam.entity;
 
-import javax.persistence.Entity;
-
-@Entity
-public class Dish extends BaseEntity {
+public class Dish extends BaseEntity<Dish> {
     private String name;
     private String description;
     private double price;

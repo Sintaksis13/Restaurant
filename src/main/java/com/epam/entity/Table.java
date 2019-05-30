@@ -2,7 +2,7 @@ package com.epam.entity;
 
 import com.epam.entity.type.*;
 
-public class Table extends BaseEntity{
+public class Table extends BaseEntity<Table> {
     private int seatsNumber;
     private TableType value;
     private TableStatus status;

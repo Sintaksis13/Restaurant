@@ -47,12 +47,6 @@ public class AddDishCommand implements ActionCommand {
     }
 
     private Dish fetchDish(String name, String description, double price) {
-        Dish dish = new Dish();
-
-        dish.setName(name);
-        dish.setDescription(description);
-        dish.setPrice(price);
-
-        return dish;
+        return new Dish(name, description, price);
     }
 }

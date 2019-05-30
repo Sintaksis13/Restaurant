@@ -34,12 +34,11 @@ public class DishDao extends AbstractDao<Dish> {
 
         try(ResultSet resultSet = preparedStatement.executeQuery()) {
             while(resultSet.next()) {
-                Dish dish= new Dish();
-                dish.setId(resultSet.getInt(FIRST));
-                dish.setName(resultSet.getString(SECOND));
-                dish.setDescription(resultSet.getString(THIRD));
-                dish.setPrice(resultSet.getDouble(FOURTH));
-                listOfDishes.add(dish);
+                int dishId = resultSet.getInt(FIRST);
+                String dishName = resultSet.getString(SECOND);
+                String dishDescription = resultSet.getString(THIRD);
+                double dishPrice = resultSet.getDouble(FOURTH);
+                listOfDishes.add(new Dish(dishName, dishDescription, dishPrice).setId(dishId));
             }
         } finally {
             closePreparedStatement(preparedStatement);
@@ -94,11 +93,11 @@ public class DishDao extends AbstractDao<Dish> {
 
         try(ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                dish = new Dish();
-                dish.setId(resultSet.getInt(FIRST));
-                dish.setName(resultSet.getString(SECOND));
-                dish.setDescription(resultSet.getString(THIRD));
-                dish.setPrice(resultSet.getDouble(FOURTH));
+                int dishId = resultSet.getInt(FIRST);
+                String dishName = resultSet.getString(SECOND);
+                String dishDescription = resultSet.getString(THIRD);
+                double dishPrice = resultSet.getDouble(FOURTH);
+                dish = new Dish(dishName, dishDescription, dishPrice).setId(dishId);
             }
         } finally {
             closePreparedStatement(preparedStatement);

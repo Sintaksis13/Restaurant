@@ -47,11 +47,6 @@ public class AcceptDishUpdateCommand implements ActionCommand {
         String description = request.getParameter(DISH_DESC);
         double price = Double.parseDouble(request.getParameter(DISH_PRICE));
 
-        Dish dish = new Dish();
-
-        dish.setName(name);
-        dish.setDescription(description);
-        dish.setPrice(price);
-        return dish;
+        return new Dish(name, description, price);
     }
 }
