@@ -1,19 +1,24 @@
 package com.epam.entity;
 
-public class Dish extends BaseEntity<Dish> {
-    private String name;
-    private String description;
-    private double price;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Objects;
 
-    public Dish(String name, String description, double price) {
+@Entity
+@Table(name = "dish")
+public class Dish extends BaseEntity<Dish> {
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "price", nullable = false)
+    private Double price;
+
+    public Dish(String name, String description, Double price) {
         this.name = name;
         this.description = description;
         this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " " + name + " " + description + " " + price;
     }
 
     public String getName() {
@@ -32,11 +37,35 @@ public class Dish extends BaseEntity<Dish> {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dish dish = (Dish) o;
+        return Double.compare(dish.price, price) == 0 &&
+                name.equals(dish.name) &&
+                Objects.equals(description, dish.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Dish {" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

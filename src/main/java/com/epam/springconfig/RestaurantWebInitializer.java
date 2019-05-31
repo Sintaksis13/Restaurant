@@ -1,6 +1,9 @@
 package com.epam.springconfig;
 
+import com.epam.filter.EncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
 
 public class RestaurantWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
@@ -16,5 +19,11 @@ public class RestaurantWebInitializer extends AbstractAnnotationConfigDispatcher
     @Override
     protected String[] getServletMappings() {
         return new String[] { "/" };
+    }
+
+    //TODO implement encoding filter (filter mapped in two places: web.xml and below)
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[] {new EncodingFilter()};
     }
 }
