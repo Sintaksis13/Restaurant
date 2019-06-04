@@ -2,6 +2,8 @@ package com.epam.entity;
 
 import com.epam.entity.type.*;
 
+import java.util.Objects;
+
 public class Table extends BaseEntity<Table> {
     private int seatsNumber;
     private TableType value;
@@ -57,10 +59,6 @@ public class Table extends BaseEntity<Table> {
 
     @Override
     public int hashCode() {
-        int result = this.getId();
-        result = 31 * result + seatsNumber;
-        result = 31 * result + value.hashCode();
-        result = 31 * result + status.hashCode();
-        return result;
+        return Objects.hash(seatsNumber, value, status, reservationTime);
     }
 }

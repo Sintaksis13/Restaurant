@@ -9,19 +9,26 @@ import javax.persistence.MappedSuperclass;
 public abstract class BaseEntity<T> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
+
+    public BaseEntity() {
+    }
+
+    public BaseEntity(long id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
         return getClass().getName() + " " + id;
     }
 
-    public T setId(int id) {
+    public T setId(long id) {
         this.id = id;
         return (T) this;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 }

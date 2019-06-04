@@ -72,7 +72,7 @@ public class TableDao extends AbstractDao<Table> {
         }
         preparedStatement.setString(THIRD, table.getStatus().toString());
         preparedStatement.setInt(FOURTH, table.getReservationTime());
-        preparedStatement.setInt(FIFTH, table.getId());
+        preparedStatement.setLong(FIFTH, table.getId());
 
         try {
             preparedStatement.executeUpdate();

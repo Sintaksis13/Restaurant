@@ -132,7 +132,7 @@ public class UserDao extends AbstractDao<User> {
         preparedStatement.setString(FIRST, user.getEmail());
         preparedStatement.setString(SECOND, user.getPhoneNumber());
         preparedStatement.setString(THIRD, user.getPassword());
-        preparedStatement.setInt(FOURTH, user.getTable().getId());
+        preparedStatement.setLong(FOURTH, user.getTable().getId());
         preparedStatement.setString(FIFTH, user.getLogin());
         int result;
 

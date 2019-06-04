@@ -34,7 +34,7 @@ public class AcceptReserveCommand implements ActionCommand {
         if (user != null) {
             Table wantedTable = fillUpTable(request);
 
-            int reserveResult = new TableAction().reserveTable(wantedTable);
+            long reserveResult = new TableAction().reserveTable(wantedTable);
 
             if (reserveResult != 0) {
                 wantedTable.setId(reserveResult);

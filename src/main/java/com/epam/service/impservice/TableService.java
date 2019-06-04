@@ -39,9 +39,9 @@ public class TableService extends AbstractService<Table> {
         return listOfTables;
     }
 
-    public int reserve(Table wantedTable) {
+    public long reserve(Table wantedTable) {
         List<Table> tableList = new LinkedList<>();
-        int tableId = UNCHANGED_ROWS;
+        long tableId = UNCHANGED_ROWS;
 
         try {
             tableList = tableDao.getAll();

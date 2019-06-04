@@ -2,6 +2,8 @@ package com.epam.entity;
 
 import com.epam.entity.type.Role;
 
+import java.util.Objects;
+
 public class User extends BaseEntity<User> {
     private String login;
     private String password;
@@ -71,12 +73,6 @@ public class User extends BaseEntity<User> {
 
     @Override
     public int hashCode() {
-        int result = this.getId();
-        result = 31 * result + login.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + phoneNumber.hashCode();
-        result = 31 * result + table.hashCode();
-        return result;
+        return Objects.hash(login, password, email, phoneNumber, table, role);
     }
 }
