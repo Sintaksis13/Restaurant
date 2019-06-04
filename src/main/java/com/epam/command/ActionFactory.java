@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ActionFactory {
+
     private static final Map<String, ActionCommand> actionMap = new HashMap<>();
 
     private ActionFactory() {
@@ -33,4 +34,5 @@ public final class ActionFactory {
     public static ActionCommand getCommand(String name) {
         return actionMap.get(name);
     }
+
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import static com.epam.constants.NumericConstants.*;
 
 public class TableDao extends AbstractDao<Table> {
+
     private static final String SELECT_ALL_TABLES = "select * from public.\"TABLE\"";
     private static final String UPDATE_TABLE = "update public.\"TABLE\" set \"Number_Of_Seats\" = ?, \"Value\" = ?, " +
             "\"Status\" = ?, \"Reservation_Time\" = ? where \"Table_ID\" = ?";

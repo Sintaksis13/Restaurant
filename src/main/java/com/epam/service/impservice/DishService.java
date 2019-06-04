@@ -3,8 +3,7 @@ package com.epam.service.impservice;
 import com.epam.dao.impdao.DishDao;
 import com.epam.entity.Dish;
 import com.epam.service.AbstractService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 public class DishService extends AbstractService<Dish>{
     private Connection connection = AbstractService.getConnectionPool().getConnection();
     private DishDao dishDao = new DishDao(connection);
-    private static final Logger LOG = LogManager.getLogger(DishService.class);
+    private static final Logger LOGGER = Logger.getLogger(DishService.class);
 
     public DishService() {
        super();
@@ -29,7 +28,7 @@ public class DishService extends AbstractService<Dish>{
         try {
             listOfDishes = dishDao.getAll();
         } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
+            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return listOfDishes;
@@ -41,7 +40,7 @@ public class DishService extends AbstractService<Dish>{
         try {
             result = dishDao.update(dish, name);
         } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
+            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return result;
@@ -54,7 +53,7 @@ public class DishService extends AbstractService<Dish>{
         try {
             result = dishDao.delete(id);
         } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
+            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return result;
@@ -67,7 +66,7 @@ public class DishService extends AbstractService<Dish>{
         try {
             result = dishDao.create(dish);
         } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
+            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return result;
@@ -79,7 +78,7 @@ public class DishService extends AbstractService<Dish>{
         try {
             dish = dishDao.findDishByName(name);
         } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
+            LOGGER.warn(SQL_EXCEPTION + ex.getMessage());
         }
 
         return dish;
