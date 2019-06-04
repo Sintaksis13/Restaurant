@@ -21,15 +21,11 @@ public abstract class HiberAbstractDao<T extends BaseEntity> {
         return getSession().getCriteriaBuilder().createQuery(tClass);
     }
 
-    public void persist(T object) {
-        try {
-            getSession().persist(object);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    protected void persist(T object) {
+        getSession().persist(object);
     }
 
-    public void delete(T object) {
+    protected void delete(T object) {
         getSession().delete(object);
     }
 }

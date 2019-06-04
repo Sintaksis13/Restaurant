@@ -30,7 +30,7 @@
     <c:set var="user" value="null" />
     <c:set var="user" value="${cookie['user'].name}" />
     <c:if test="${user == \"null\"}">
-        <c:redirect url="/index.jsp" />
+        <c:redirect url="/WEB-INF/jsp/index.jsp" />
     </c:if>
     <div class="container-fluid">
         <div class="row"><h1 align="center"><fmt:message var="mainHello" key="main_hello" />${mainHello}</h1></div>

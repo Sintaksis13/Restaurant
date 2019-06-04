@@ -27,7 +27,7 @@
     <style>
         body {
             padding: 30px;
-            background: url("resource/bgimg.jpg");
+            background: url("../../resource/bgimg.jpg");
             background-size: 100%;
         }
         .style {

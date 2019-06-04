@@ -1,7 +1,9 @@
 package com.epam.service.impservice;
 
+import com.epam.dao.DaoResult;
 import com.epam.dao.impdao.DishDaoImpl;
 import com.epam.entity.Dish;
+import com.epam.exception.DaoException;
 import com.epam.service.HiberDishService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +20,11 @@ public class DishServiceImpl implements HiberDishService {
     }
 
     @Override
-    public void saveDish(Dish dish) {
-        dishDao.persist(dish);
+    public void saveDish(Dish dish) throws DaoException {
+        DaoResult result = dishDao.saveDish(dish);
+        if (result != DaoResult.SUCCESSFUL) {
+            throw new DaoException("Save result is not successful!");
+        }
     }
 
     @Override
