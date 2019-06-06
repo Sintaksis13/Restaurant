@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 
 public abstract class HibernateAbstractDao<T extends BaseEntity> {
     private final SessionFactory sessionFactory;
@@ -24,6 +25,10 @@ public abstract class HibernateAbstractDao<T extends BaseEntity> {
 
     protected CriteriaQuery<T> createQuery(Class<T> tClass) {
         return getSession().getCriteriaBuilder().createQuery(tClass);
+    }
+
+    protected CriteriaUpdate<T> createUpdate(Class<T> tClass) {
+        return getSession().getCriteriaBuilder().createCriteriaUpdate(tClass);
     }
 
     protected void persist(T object) {
