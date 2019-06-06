@@ -14,6 +14,6 @@
 <body>
     <p><h1>Something goes wrong.. Sorry!</h1>
     <p><h2>Please, return to main page and retry</h2>
-    <p><a href="<c:url value="/WEB-INF/jsp/index_main.jsp"/>">Main page</a>
+    <p><a href="<c:url value="/"/>">Main page</a>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.epam.springconfig;
+package com.epam.configuration.spring;
 
 import com.epam.filter.EncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;

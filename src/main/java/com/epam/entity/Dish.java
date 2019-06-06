@@ -15,6 +15,9 @@ public class Dish extends BaseEntity<Dish> {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    public Dish() {
+    }
+
     public Dish(String name, String description, Double price) {
         this.name = name;
         this.description = description;
@@ -69,10 +72,11 @@ public class Dish extends BaseEntity<Dish> {
 
     @Override
     public String toString() {
-        return "Dish {" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
+        return "Dish[" +
+                super.toString() +
+                ", name=" + name +
+                ", description=" + description +
                 ", price=" + price +
-                '}';
+                ']';
     }
 }

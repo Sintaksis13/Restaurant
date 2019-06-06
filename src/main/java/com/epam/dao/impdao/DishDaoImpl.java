@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 //TODO implement all methods by using NamedQuery or smth else
@@ -17,6 +19,7 @@ import java.util.List;
 @Repository("dishDao")
 public class DishDaoImpl extends HiberAbstractDao<Dish> implements DishDao {
     private static final Logger LOG = LogManager.getLogger(DishDaoImpl.class);
+    private static final Class<Dish> CLASS = Dish.class;
 
     @Autowired
     public DishDaoImpl(SessionFactory sessionFactory) {
@@ -40,7 +43,16 @@ public class DishDaoImpl extends HiberAbstractDao<Dish> implements DishDao {
 
     @Override
     public List<Dish> findAllDishes() {
-        return getSession().createQuery(getAllQuery(Dish.class)).list();
+        List<Dish> dishes;
+        try {
+            CriteriaQuery<Dish> query = getSession().getCriteriaBuilder().createQuery(CLASS);
+            dishes = getSession().createQuery(query.select(query.from(CLASS))).list();
+        } catch (Exception e) {
+            LOG.error("Error occurred during fetching dishes from database", e);
+            dishes = new ArrayList<>();
+        }
+
+        return dishes;
     }
 
     @Override

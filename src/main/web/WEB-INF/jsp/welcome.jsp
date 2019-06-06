@@ -3,6 +3,6 @@
 <head>
     <title>Spring 4 MVC Hello World Example with Maven Eclipse</title></head>
 <body>
-    <h2>Hello, ${requestScope.get("name")}</h2>
+    <h2>Here your dish: name = ${requestScope.dish.name}, price = ${requestScope.dish.price}</h2>
 </body>
 </html>

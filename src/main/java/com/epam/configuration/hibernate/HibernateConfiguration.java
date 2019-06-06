@@ -1,4 +1,4 @@
-package com.epam.springconfig.hibernate;
+package com.epam.configuration.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.epam.springconfig.hibernate")
+@ComponentScan(basePackages = "com.epam.configuration.hibernate")
 @PropertySource(value = "classpath:database.properties")
 public class HibernateConfiguration {
     private final Environment environment;

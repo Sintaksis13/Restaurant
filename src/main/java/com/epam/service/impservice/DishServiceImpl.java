@@ -4,7 +4,7 @@ import com.epam.dao.DaoResult;
 import com.epam.dao.impdao.DishDaoImpl;
 import com.epam.entity.Dish;
 import com.epam.exception.DaoException;
-import com.epam.service.HiberDishService;
+import com.epam.service.HiberService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service("dishService")
 @Transactional
-public class DishServiceImpl implements HiberDishService {
+public class DishServiceImpl implements HiberService<Dish> {
     private final DishDaoImpl dishDao;
 
     public DishServiceImpl(DishDaoImpl dishDao) {
@@ -20,7 +20,7 @@ public class DishServiceImpl implements HiberDishService {
     }
 
     @Override
-    public void saveDish(Dish dish) throws DaoException {
+    public void save(Dish dish) throws DaoException {
         DaoResult result = dishDao.saveDish(dish);
         if (result != DaoResult.SUCCESSFUL) {
             throw new DaoException("Save result is not successful!");
@@ -28,22 +28,22 @@ public class DishServiceImpl implements HiberDishService {
     }
 
     @Override
-    public List<Dish> findAllDishes() {
+    public List<Dish> findAll() {
         return dishDao.findAllDishes();
     }
 
     @Override
-    public void deleteDishByName(String name) {
+    public void deleteByName(String name) {
         dishDao.deleteDishByName(name);
     }
 
     @Override
-    public Dish findDishByName(String name) {
+    public Dish findByName(String name) {
         return dishDao.findDishByName(name);
     }
 
     @Override
-    public void updateDish(Dish dish) {
+    public void update(Dish dish) {
         dishDao.updateDish(dish);
     }
 }

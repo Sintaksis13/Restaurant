@@ -11,18 +11,19 @@ public abstract class BaseEntity<T> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    public BaseEntity() {
+    BaseEntity() {
     }
 
-    public BaseEntity(long id) {
+    BaseEntity(long id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
-        return getClass().getName() + " " + id;
+        return "id=" + id;
     }
 
+    @SuppressWarnings("unchecked")
     public T setId(long id) {
         this.id = id;
         return (T) this;
