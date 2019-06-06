@@ -2,17 +2,19 @@ package com.epam.service;
 
 import com.epam.dao.DaoResult;
 import com.epam.entity.BaseEntity;
+import com.epam.entity.Dish;
+import javafx.util.Pair;
 
 import java.util.List;
 
 public interface HibernateService<T extends BaseEntity> {
-    DaoResult save(T object);
+    Pair<DaoResult, T> save(T object);
 
-    List<T> findAll();
+    Pair<DaoResult, List<T>> findAll();
 
-    void deleteByName(String name);
+    Pair<DaoResult, T> deleteByName(String name);
 
-    T findByName(String name);
+    Pair<DaoResult, T> findByName(String name);
 
-    void update(T object);
+    Pair<DaoResult, Dish> update(T object);
 }

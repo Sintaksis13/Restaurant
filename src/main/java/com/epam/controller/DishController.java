@@ -4,10 +4,8 @@ import com.epam.dao.DaoResult;
 import com.epam.entity.Dish;
 import com.epam.entity.response.ResponseEntity;
 import com.epam.service.HibernateService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import javafx.util.Pair;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,24 +19,31 @@ public class DishController {
 
     @PostMapping("/dish")
     public ResponseEntity createDish(@RequestBody Dish dish) {
-        DaoResult result = dishService.save(dish);
-        return new ResponseEntity(result, dish);
+        Pair<DaoResult, Dish> creatingResult = dishService.save(dish);
+        return new ResponseEntity(creatingResult.getKey(), creatingResult.getValue());
     }
     
     @GetMapping("/dish")
     public ResponseEntity findAllDishes() {
-        List<Dish> dishes = dishService.findAll();
-        return new ResponseEntity(checkResult(dishes), dishes);
+        Pair<DaoResult, List<Dish>> fetchingResult = dishService.findAll();
+        return new ResponseEntity(fetchingResult.getKey(), fetchingResult.getValue());
     }
-    
-    private DaoResult checkResult(List<Dish> dishes) {
-        DaoResult result;
-        if (dishes == null) {
-            result = DaoResult.FAILED.setMessage("Dish list is null");
-        } else {
-            result = DaoResult.SUCCESSFUL;
-        }
-        
-        return result;
+
+    @GetMapping("/dish/{name}")
+    public ResponseEntity findDishByName(@PathVariable String name) {
+        Pair<DaoResult, Dish> fetchingResult = dishService.findByName(name);
+        return new ResponseEntity(fetchingResult.getKey(), fetchingResult.getValue());
+    }
+
+    @DeleteMapping("/dish/{name}")
+    public ResponseEntity deleteDishByName(@PathVariable String name) {
+        Pair<DaoResult, Dish> deleteResult = dishService.deleteByName(name);
+        return new ResponseEntity(deleteResult.getKey(), deleteResult.getValue());
+    }
+
+    @PutMapping("/dish")
+    public ResponseEntity updateDish(@RequestBody Dish dish) {
+        Pair<DaoResult, Dish> updatedResult = dishService.update(dish);
+        return new ResponseEntity(updatedResult.getKey(), updatedResult.getValue());
     }
 }

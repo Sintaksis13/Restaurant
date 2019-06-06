@@ -8,15 +8,12 @@ import com.epam.exception.EntityAlreadyExistException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
-
-//TODO implement all methods by using NamedQuery or smth else
 
 @Repository("dishDao")
 public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish> {
@@ -29,7 +26,7 @@ public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish>
     }
 
     @Override
-    public void save(Dish dish) throws DaoException {
+    public Dish save(Dish dish) throws DaoException {
         String dishName = dish.getName();
         Dish dishByName = findByName(dishName);
         if (dishByName != null) {
@@ -37,20 +34,15 @@ public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish>
             throw new EntityAlreadyExistException(String.format("Dish '%s' already exists", dishName));
         }
 
-        Transaction transaction = null;
         try {
-            transaction = getSession().beginTransaction();
             persist(dish);
-            transaction.commit();
             LOG.info("Dish = {} has been saved", dish);
         } catch (Exception e) {
             LOG.error("Error occurred during saving dish = {}", dish, e);
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
             throw new DaoException("Error during saving dish");
         }
+
+        return dish;
     }
 
     @Override
@@ -70,8 +62,22 @@ public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish>
     }
 
     @Override
-    public void deleteByName(String name) {
+    public Dish deleteByName(String dishName) throws DaoException {
+        Dish dishByName = findByName(dishName);
+        if (dishByName == null) {
+            LOG.warn("Dish with name={} doesn't exists", dishName);
+            throw new EntityAlreadyExistException(String.format("Dish '%s' doesn't exists", dishName));
+        }
 
+        try {
+            delete(dishByName);
+            LOG.info("Dish = {} has been successfully deleted", dishByName);
+        } catch (Exception e) {
+            LOG.error("Error occurred during deleting dish = {}", dishByName, e);
+            throw new DaoException("Error during deleting dish");
+        }
+
+        return dishByName;
     }
 
     @Override
@@ -81,7 +87,7 @@ public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish>
             CriteriaQuery<Dish> query = createQuery(CLASS);
             Root<Dish> root = query.from(CLASS);
             query.select(root).where(getCriteriaBuilder().equal(root.get("name"), name));
-            dish = getSession().createQuery(query).getSingleResult();
+            dish = getSession().createQuery(query).stream().findFirst().orElse(null);
         } catch (Exception e) {
             LOG.error("Error occurred during fetching dish from database", e);
             throw new DaoException("Error during fetching dish");
@@ -90,8 +96,13 @@ public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish>
         return dish;
     }
 
+    //TODO implement update method
     @Override
-    public void update(Dish dish) {
+    public Dish update(Dish dish) throws DaoException {
+        if (dish == null) {
+            throw new DaoException("Fix me");
+        }
 
+        return dish;
     }
 }

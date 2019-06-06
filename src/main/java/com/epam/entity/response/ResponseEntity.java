@@ -19,6 +19,10 @@ public class ResponseEntity {
         this.responseObjects = responseObjects;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     public String getStatus() {
         return status;
     }
