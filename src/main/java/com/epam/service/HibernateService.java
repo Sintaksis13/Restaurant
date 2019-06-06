@@ -1,12 +1,12 @@
 package com.epam.service;
 
+import com.epam.dao.DaoResult;
 import com.epam.entity.BaseEntity;
-import com.epam.exception.DaoException;
 
 import java.util.List;
 
-public interface HiberService<T extends BaseEntity> {
-    void save(T object) throws DaoException;
+public interface HibernateService<T extends BaseEntity> {
+    DaoResult save(T object);
 
     List<T> findAll();
 

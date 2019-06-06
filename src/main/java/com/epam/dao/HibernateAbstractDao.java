@@ -4,12 +4,13 @@ import com.epam.entity.BaseEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-public abstract class HiberAbstractDao<T extends BaseEntity> {
+public abstract class HibernateAbstractDao<T extends BaseEntity> {
     private final SessionFactory sessionFactory;
 
-    public HiberAbstractDao(SessionFactory sessionFactory) {
+    public HibernateAbstractDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -17,7 +18,11 @@ public abstract class HiberAbstractDao<T extends BaseEntity> {
         return sessionFactory.getCurrentSession();
     }
 
-    protected CriteriaQuery<T> getAllQuery(Class<T> tClass) {
+    protected CriteriaBuilder getCriteriaBuilder() {
+        return getSession().getCriteriaBuilder();
+    }
+
+    protected CriteriaQuery<T> createQuery(Class<T> tClass) {
         return getSession().getCriteriaBuilder().createQuery(tClass);
     }
 

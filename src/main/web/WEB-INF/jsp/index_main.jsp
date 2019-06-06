@@ -7,7 +7,7 @@
 </head>
 <body>
 <spring:message code="index_hello" />
-<form action="<c:url value="/addDish"/>" method="post">
+<form action="<c:url value="/dish"/>" method="post">
     <label>
         Dish name:
         <input type="text" name="dishName" id="dishName">
@@ -22,6 +22,10 @@
     </label>
     <input type="submit" value="Add dish">
 </form>
+
+<h3>${requestScope.dish.name} is dish name</h3>
+<h3>${requestScope.dish.description} is dish description</h3>
+<h3>${requestScope.dish.price} is dish price</h3>
 
 <c:forEach var="dish" items="${requestScope.dishes}">
     <div class="col-md-4">

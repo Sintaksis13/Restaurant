@@ -1,51 +1,44 @@
 package com.epam.controller;
 
+import com.epam.dao.DaoResult;
 import com.epam.entity.Dish;
-import com.epam.exception.DaoException;
-import com.epam.service.HiberService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.epam.entity.response.ResponseEntity;
+import com.epam.service.HibernateService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import java.util.List;
+
+@RestController
 public class DishController {
-    private static final Logger LOG = LogManager.getLogger(DishController.class);
-    private final HiberService<Dish> dishService;
+    private final HibernateService<Dish> dishService;
 
-    public DishController(HiberService<Dish> dishService) {
+    public DishController(HibernateService<Dish> dishService) {
         this.dishService = dishService;
     }
 
-    @RequestMapping("/addDish")
-    public String addDish(
-            Model model,
-            @RequestParam(name = "dishName") String dishName,
-            @RequestParam(name = "dishDescription") String dishDescription,
-            @RequestParam(name = "dishPrice") Double dishPrice
-    ) {
-        LOG.debug("Start...");
-        Dish dish = null;
-        try {
-            dish = new Dish(dishName, dishDescription, dishPrice);
-            dishService.save(dish);
-        } catch (DaoException e) {
-            LOG.debug("Error occurred during saving dish = {}", dish, e);
-            return "errors/500";
-        } catch (Exception e) {
-            LOG.debug("Unexpected error, dish = {}", dish, e);
-            return "errors/500";
-        }
-
-        model.addAttribute("dishes", dishService.findAll());
-        return "index_main";
+    @PostMapping("/dish")
+    public ResponseEntity createDish(@RequestBody Dish dish) {
+        DaoResult result = dishService.save(dish);
+        return new ResponseEntity(result, dish);
     }
-
-    @RequestMapping("/showAllDishes")
-    public String getAllDishes(Model model) {
-        model.addAttribute("dishes", dishService.findAll());
-        return "index_main";
+    
+    @GetMapping("/dish")
+    public ResponseEntity findAllDishes() {
+        List<Dish> dishes = dishService.findAll();
+        return new ResponseEntity(checkResult(dishes), dishes);
+    }
+    
+    private DaoResult checkResult(List<Dish> dishes) {
+        DaoResult result;
+        if (dishes == null) {
+            result = DaoResult.FAILED.setMessage("Dish list is null");
+        } else {
+            result = DaoResult.SUCCESSFUL;
+        }
+        
+        return result;
     }
 }
