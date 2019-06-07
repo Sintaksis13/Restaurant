@@ -41,9 +41,9 @@ public class DishController {
         return new ResponseEntity(deleteResult.getKey(), deleteResult.getValue());
     }
 
-    @PutMapping("/dish")
-    public ResponseEntity updateDish(@RequestBody Dish dish) {
-        Pair<DaoResult, Dish> updatedResult = dishService.update(dish);
+    @PutMapping("/dish/{name}")
+    public ResponseEntity updateDish(@PathVariable String name, @RequestBody Dish dish) {
+        Pair<DaoResult, Dish> updatedResult = dishService.update(name, dish);
         return new ResponseEntity(updatedResult.getKey(), updatedResult.getValue());
     }
 }

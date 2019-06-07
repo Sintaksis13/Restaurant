@@ -94,11 +94,11 @@ public class DishServiceImpl implements HibernateService<Dish> {
     }
 
     @Override
-    public Pair<DaoResult, Dish> update(Dish dish) {
+    public Pair<DaoResult, Dish> update(String dishName, Dish dish) {
         DaoResult result;
         Dish updatedDish = null;
         try {
-            updatedDish = dishDao.update(dish);
+            updatedDish = dishDao.update(dishName, dish);
             result = DaoResult.SUCCESSFUL;
         } catch (DaoException e) {
             result = DaoResult.FAILED.setMessage(e.getMessage());

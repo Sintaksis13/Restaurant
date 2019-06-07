@@ -25,9 +25,6 @@ public final class ActionFactory {
         actionMap.put("reservePage", new ReserveCommand());
         actionMap.put("acceptReserve", new AcceptReserveCommand());
         actionMap.put("viewUsers", new ViewUsersCommand());
-        actionMap.put("addDish", new AddDishCommand());
-        actionMap.put("deleteDish", new DeleteDishCommand());
-        actionMap.put("updateDish", new UpdateDishCommand());
         actionMap.put("acceptDishUpdate", new AcceptDishUpdateCommand());
     }
 

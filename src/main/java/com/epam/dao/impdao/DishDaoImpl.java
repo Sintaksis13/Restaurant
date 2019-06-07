@@ -31,13 +31,13 @@ public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish>
         String dishName = dish.getName();
         Dish dishByName = findByName(dishName);
         if (dishByName != null) {
-            LOG.warn("Dish with name={} already exists", dishName);
+            LOG.warn("Dish with name='{}' already exists", dishName);
             throw new DaoException(String.format("Dish '%s' already exists", dishName));
         }
 
         try {
             persist(dish);
-            LOG.info("Dish = {} has been saved", dish);
+            LOG.info("Dish = {} was saved", dish);
         } catch (Exception e) {
             LOG.error("Error occurred during saving dish = {}", dish, e);
             throw new DaoException("Error during saving dish");
@@ -72,7 +72,7 @@ public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish>
 
         try {
             delete(dishByName);
-            LOG.info("Dish = {} has been successfully deleted", dishByName);
+            LOG.info("Dish = {} was successfully deleted", dishByName);
         } catch (Exception e) {
             LOG.error("Error occurred during deleting dish = {}", dishByName, e);
             throw new DaoException("Error during deleting dish");
@@ -101,26 +101,35 @@ public class DishDaoImpl extends HibernateAbstractDao<Dish> implements Dao<Dish>
     }
 
     @Override
-    public Dish update(Dish dish) throws DaoException {
-        Dish oldDish = findByName(dish.getName());
+    public Dish update(String dishName, Dish dish) throws DaoException {
+        Dish oldDish = findByName(dishName);
         if (oldDish == null) {
-            throw new DaoException(String.format("Dish with name '%s' was not found", dish.getName()));
+            LOG.warn("Dish with name '{}' was not found", dishName);
+            throw new DaoException(String.format("Dish with name '%s' was not found", dishName));
         } else if (oldDish.equals(dish)) {
-            throw new DaoException("Dishes are equals");
+            throw new DaoException("Dish names are equals");
+        }
+
+        Dish existingDish = findByName(dish.getName());
+        if (existingDish != null) {
+            LOG.warn("Dish with name '{}' already exists", existingDish.getName());
+            throw new DaoException(String.format("Dish with name '%s' already exists", existingDish.getName()));
         }
 
         CriteriaUpdate<Dish> update = createUpdate(CLASS);
         Root<Dish> root = update.from(CLASS);
+        update.set("name", dish.getName());
         update.set("description", dish.getDescription());
         update.set("price", dish.getPrice());
-        update.where(getCriteriaBuilder().equal(root.get("name"), dish.getName()));
+        update.where(getCriteriaBuilder().equal(root.get("name"), dishName));
         int affectedRecordsNumber = getSession().createQuery(update).executeUpdate();
-
         if (affectedRecordsNumber < 1) {
             LOG.warn("No one record was not affected, dish={}", dish);
             throw new DaoException("No one record was not affected");
         }
 
-        return dish;
+        dish.setId(oldDish.getId());
+        LOG.info("Dish={} was updated. New data={}", oldDish, dish);
+        return oldDish;
     }
 }

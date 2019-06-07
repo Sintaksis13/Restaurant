@@ -14,5 +14,5 @@ public interface Dao<T> {
 
     T findByName(String name) throws DaoException;
 
-    Dish update(T dish) throws DaoException;
+    Dish update(String name, T dish) throws DaoException;
 }

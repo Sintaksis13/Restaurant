@@ -16,5 +16,5 @@ public interface HibernateService<T extends BaseEntity> {
 
     Pair<DaoResult, T> findByName(String name);
 
-    Pair<DaoResult, Dish> update(T object);
+    Pair<DaoResult, Dish> update(String name, T object);
 }

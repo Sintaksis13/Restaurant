@@ -130,10 +130,12 @@ public class DishServiceImplTest {
 
     @Test
     public void testUpdate_success() throws DaoException {
-        when(dishDao.update(testDish)).thenReturn(testDish);
+        String newTestDishName = "newTestDish";
+
+        when(dishDao.update(anyString(), any(Dish.class))).thenReturn(testDish);
         dishService = new DishServiceImpl(dishDao);
 
-        Pair<DaoResult, Dish> updateResult = dishService.update(testDish);
+        Pair<DaoResult, Dish> updateResult = dishService.update(newTestDishName, testDish);
 
         assertEquals(DaoResult.SUCCESSFUL, updateResult.getKey());
         assertEquals(testDish, updateResult.getValue());
@@ -141,12 +143,13 @@ public class DishServiceImplTest {
 
     @Test
     public void testUpdate_fail_causedByThrowingDaoException() throws DaoException {
+        String newTestDishName = "newTestDish";
         String exceptionMessage = "Test exception";
 
-        when(dishDao.update(any(Dish.class))).thenThrow(new DaoException(exceptionMessage));
+        when(dishDao.update(anyString(), any(Dish.class))).thenThrow(new DaoException(exceptionMessage));
         dishService = new DishServiceImpl(dishDao);
 
-        Pair<DaoResult, Dish> updateResult = dishService.update(testDish);
+        Pair<DaoResult, Dish> updateResult = dishService.update(newTestDishName, testDish);
 
         assertEquals(DaoResult.FAILED, updateResult.getKey());
         assertEquals(exceptionMessage, updateResult.getKey().getMessage());
