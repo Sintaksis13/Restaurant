@@ -34,7 +34,7 @@ public class DishServiceImpl implements HibernateService<Dish> {
             result = DaoResult.SUCCESSFUL;
         } catch (DaoException e) {
             result = DaoResult.FAILED.setMessage(e.getMessage());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOG.error("Error occurred during saving dish = {}", dish, e);
             result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
         }
@@ -51,7 +51,7 @@ public class DishServiceImpl implements HibernateService<Dish> {
             result = DaoResult.SUCCESSFUL;
         } catch (DaoException e) {
             result = DaoResult.FAILED.setMessage(e.getMessage());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOG.error("Error occurred during fetching dishes", e);
             result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
         }
@@ -68,7 +68,7 @@ public class DishServiceImpl implements HibernateService<Dish> {
             result = DaoResult.SUCCESSFUL;
         } catch (DaoException e) {
             result = DaoResult.FAILED.setMessage(e.getMessage());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOG.error("Error occurred during deleting dish = {}", dishName, e);
             result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
         }
@@ -85,7 +85,7 @@ public class DishServiceImpl implements HibernateService<Dish> {
             result = DaoResult.SUCCESSFUL;
         } catch (DaoException e) {
             result = DaoResult.FAILED.setMessage(e.getMessage());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOG.error("Error occurred during fetching dish = {}", dishName, e);
             result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
         }
@@ -102,7 +102,7 @@ public class DishServiceImpl implements HibernateService<Dish> {
             result = DaoResult.SUCCESSFUL;
         } catch (DaoException e) {
             result = DaoResult.FAILED.setMessage(e.getMessage());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOG.error("Error occurred during updating dish = {}", dish, e);
             result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
         }
