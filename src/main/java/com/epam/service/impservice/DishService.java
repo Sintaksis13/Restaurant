@@ -1,87 +1,112 @@
 package com.epam.service.impservice;
 
+import com.epam.dao.result.DaoResult;
 import com.epam.dao.impdao.DishDao;
 import com.epam.entity.Dish;
-import com.epam.service.AbstractService;
+import com.epam.exception.DaoException;
+import com.epam.service.HibernateService;
+import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
-import static com.epam.constants.ExceptionConstants.SQL_EXCEPTION;
-import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
+@Service("dishService")
+@Transactional
+public class DishService implements HibernateService<Dish> {
+    private static final String UNEXPECTED_ERROR = "Unexpected error";
 
-public class DishService extends AbstractService<Dish>{
-    private Connection connection = AbstractService.getConnectionPool().getConnection();
-    private DishDao dishDao = new DishDao(connection);
     private static final Logger LOG = LogManager.getLogger(DishService.class);
+    private final DishDao dishDao;
 
-    public DishService() {
-       super();
+    public DishService(DishDao dishDao) {
+        this.dishDao = dishDao;
     }
 
     @Override
-    public List<Dish> getAll() {
-        List<Dish> listOfDishes = null;
-
+    public Pair<DaoResult, Dish> save(Dish dish) {
+        DaoResult result;
+        Dish savedDish = null;
         try {
-            listOfDishes = dishDao.getAll();
-        } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
+            savedDish = dishDao.save(dish);
+            result = DaoResult.SUCCESSFUL;
+        } catch (DaoException e) {
+            result = DaoResult.FAILED.setMessage(e.getMessage());
+        } catch (Throwable e) {
+            LOG.error("Error occurred during saving dish = {}", dish, e);
+            result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
         }
 
-        return listOfDishes;
-    }
-
-    public int update(Dish dish, String name) {
-        int result = UNCHANGED_ROWS;
-
-        try {
-            result = dishDao.update(dish, name);
-        } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
-        }
-
-        return result;
+        return new Pair<>(result, savedDish);
     }
 
     @Override
-    public int delete(int id) {
-        int result = UNCHANGED_ROWS;
-
+    public Pair<DaoResult, List<Dish>> findAll() {
+        DaoResult result;
+        List<Dish> dishes = null;
         try {
-            result = dishDao.delete(id);
-        } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
+            dishes = dishDao.findAll();
+            result = DaoResult.SUCCESSFUL;
+        } catch (DaoException e) {
+            result = DaoResult.FAILED.setMessage(e.getMessage());
+        } catch (Throwable e) {
+            LOG.error("Error occurred during fetching dishes", e);
+            result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
         }
 
-        return result;
+        return new Pair<>(result, dishes);
     }
 
     @Override
-    public int create(Dish dish) {
-        int result = UNCHANGED_ROWS;
-
-        try {
-            result = dishDao.create(dish);
-        } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
-        }
-
-        return result;
-    }
-
-    public Dish getDish(String name) {
+    public Pair<DaoResult, Dish> deleteByName(String dishName) {
+        DaoResult result;
         Dish dish = null;
-
         try {
-            dish = dishDao.findDishByName(name);
-        } catch (SQLException ex) {
-            LOG.warn(SQL_EXCEPTION + ex.getMessage());
+            dish = dishDao.deleteByName(dishName);
+            result = DaoResult.SUCCESSFUL;
+        } catch (DaoException e) {
+            result = DaoResult.FAILED.setMessage(e.getMessage());
+        } catch (Throwable e) {
+            LOG.error("Error occurred during deleting dish = {}", dishName, e);
+            result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
         }
 
-        return dish;
+        return new Pair<>(result, dish);
+    }
+
+    @Override
+    public Pair<DaoResult, Dish> findByName(String dishName) {
+        DaoResult result;
+        Dish dish = null;
+        try {
+            dish = dishDao.findByName(dishName);
+            result = DaoResult.SUCCESSFUL;
+        } catch (DaoException e) {
+            result = DaoResult.FAILED.setMessage(e.getMessage());
+        } catch (Throwable e) {
+            LOG.error("Error occurred during fetching dish = {}", dishName, e);
+            result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
+        }
+
+        return new Pair<>(result, dish);
+    }
+
+    @Override
+    public Pair<DaoResult, Dish> update(String dishName, Dish dish) {
+        DaoResult result;
+        Dish updatedDish = null;
+        try {
+            updatedDish = dishDao.update(dishName, dish);
+            result = DaoResult.SUCCESSFUL;
+        } catch (DaoException e) {
+            result = DaoResult.FAILED.setMessage(e.getMessage());
+        } catch (Throwable e) {
+            LOG.error("Error occurred during updating dish = {}", dish, e);
+            result = DaoResult.FAILED.setMessage(UNEXPECTED_ERROR);
+        }
+
+        return new Pair<>(result, updatedDish);
     }
 }

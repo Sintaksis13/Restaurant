@@ -1,6 +1,6 @@
 package com.epam.controller;
 
-import com.epam.dao.DaoResult;
+import com.epam.dao.result.DaoResult;
 import com.epam.entity.Dish;
 import com.epam.entity.response.ResponseEntity;
 import com.epam.service.HibernateService;

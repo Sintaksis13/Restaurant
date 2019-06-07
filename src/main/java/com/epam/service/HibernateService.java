@@ -1,6 +1,6 @@
 package com.epam.service;
 
-import com.epam.dao.DaoResult;
+import com.epam.dao.result.DaoResult;
 import com.epam.entity.BaseEntity;
 import com.epam.entity.Dish;
 import javafx.util.Pair;

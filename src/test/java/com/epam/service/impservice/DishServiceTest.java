@@ -1,7 +1,7 @@
 package com.epam.service.impservice;
 
-import com.epam.dao.DaoResult;
-import com.epam.dao.impdao.DishDaoImpl;
+import com.epam.dao.result.DaoResult;
+import com.epam.dao.impdao.DishDao;
 import com.epam.entity.Dish;
 import com.epam.exception.DaoException;
 import com.epam.service.HibernateService;
@@ -21,9 +21,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DishServiceImplTest {
+public class DishServiceTest {
     @Mock
-    private DishDaoImpl dishDao;
+    private DishDao dishDao;
 
     private HibernateService<Dish> dishService;
     private final Dish testDish = new Dish("test", "test", 100.0);
@@ -31,7 +31,7 @@ public class DishServiceImplTest {
     @Test
     public void testSave_success() throws DaoException {
         when(dishDao.save(any(Dish.class))).thenReturn(testDish);
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, Dish> saveResult = dishService.save(testDish);
 
@@ -44,7 +44,7 @@ public class DishServiceImplTest {
         String exceptionMessage = "Test exception";
 
         when(dishDao.save(any(Dish.class))).thenThrow(new DaoException(exceptionMessage));
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, Dish> saveResult = dishService.save(testDish);
 
@@ -56,7 +56,7 @@ public class DishServiceImplTest {
     @Test
     public void testFindAll_success() throws DaoException {
         when(dishDao.findAll()).thenReturn(Collections.singletonList(testDish));
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, List<Dish>> fetchResult = dishService.findAll();
 
@@ -69,7 +69,7 @@ public class DishServiceImplTest {
         String exceptionMessage = "Test exception";
 
         when(dishDao.findAll()).thenThrow(new DaoException(exceptionMessage));
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, List<Dish>> fetchResult = dishService.findAll();
 
@@ -81,7 +81,7 @@ public class DishServiceImplTest {
     @Test
     public void testDeleteByName_success() throws DaoException {
         when(dishDao.deleteByName(testDish.getName())).thenReturn(testDish);
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, Dish> deleteResult = dishService.deleteByName(testDish.getName());
 
@@ -94,7 +94,7 @@ public class DishServiceImplTest {
         String exceptionMessage = "Test exception";
 
         when(dishDao.deleteByName(anyString())).thenThrow(new DaoException(exceptionMessage));
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, Dish> deleteResult = dishService.deleteByName(testDish.getName());
 
@@ -106,7 +106,7 @@ public class DishServiceImplTest {
     @Test
     public void testFindByName_success() throws DaoException {
         when(dishDao.findByName(testDish.getName())).thenReturn(testDish);
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, Dish> fetchResult = dishService.findByName(testDish.getName());
 
@@ -119,7 +119,7 @@ public class DishServiceImplTest {
         String exceptionMessage = "Test exception";
 
         when(dishDao.findByName(anyString())).thenThrow(new DaoException(exceptionMessage));
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, Dish> fetchResult = dishService.findByName(testDish.getName());
 
@@ -133,7 +133,7 @@ public class DishServiceImplTest {
         String newTestDishName = "newTestDish";
 
         when(dishDao.update(anyString(), any(Dish.class))).thenReturn(testDish);
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, Dish> updateResult = dishService.update(newTestDishName, testDish);
 
@@ -147,7 +147,7 @@ public class DishServiceImplTest {
         String exceptionMessage = "Test exception";
 
         when(dishDao.update(anyString(), any(Dish.class))).thenThrow(new DaoException(exceptionMessage));
-        dishService = new DishServiceImpl(dishDao);
+        dishService = new DishService(dishDao);
 
         Pair<DaoResult, Dish> updateResult = dishService.update(newTestDishName, testDish);
 

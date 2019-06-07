@@ -1,6 +1,6 @@
 package com.epam.entity.response;
 
-import com.epam.dao.DaoResult;
+import com.epam.dao.result.DaoResult;
 
 public class ResponseEntity {
     private final String status;

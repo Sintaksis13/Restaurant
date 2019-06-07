@@ -17,7 +17,6 @@ public final class ActionFactory {
         actionMap.put("registerPage", new RegisterCommand());
         actionMap.put("mainPage", new MainCommand());
         actionMap.put("authorizationPage", new AuthenticationCommand());
-        actionMap.put("menuPage", new MenuCommand());
         actionMap.put("roomPage", new RoomCommand());
         actionMap.put("logoutPage", new LogOutCommand());
         actionMap.put("changeAccount", new ChangeCommand());
@@ -25,7 +24,6 @@ public final class ActionFactory {
         actionMap.put("reservePage", new ReserveCommand());
         actionMap.put("acceptReserve", new AcceptReserveCommand());
         actionMap.put("viewUsers", new ViewUsersCommand());
-        actionMap.put("acceptDishUpdate", new AcceptDishUpdateCommand());
     }
 
     public static ActionCommand getCommand(String name) {

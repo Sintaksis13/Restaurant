@@ -1,4 +1,4 @@
-package com.epam.dao;
+package com.epam.dao.result;
 
 public enum DaoResult {
     SUCCESSFUL("OK"), FAILED("ERROR");
