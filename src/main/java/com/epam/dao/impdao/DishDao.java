@@ -89,12 +89,14 @@ public class DishDao extends HibernateAbstractDao<Dish> implements Dao<Dish> {
             Root<Dish> root = query.from(CLASS);
             query.select(root).where(getCriteriaBuilder().equal(root.get("name"), dishName));
             dish = getSession().createQuery(query).stream().findFirst().orElse(null);
-        } catch (NoResultException e) {
-            LOG.warn("Dish with name '{}' was not found", dishName);
-            return null;
         } catch (Exception e) {
             LOG.error("Error occurred during fetching dish from database", e);
             throw new DaoException("Error during fetching dish");
+        }
+
+        if (dish == null) {
+            LOG.warn("Dish with name '{}' was not found", dishName);
+            throw new DaoException(String.format("Dish with name '%s' was not found", dishName));
         }
 
         return dish;
