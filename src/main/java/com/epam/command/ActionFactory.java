@@ -21,8 +21,6 @@ public final class ActionFactory {
         actionMap.put("logoutPage", new LogOutCommand());
         actionMap.put("changeAccount", new ChangeCommand());
         actionMap.put("acceptChanges", new AcceptChangeCommand());
-        actionMap.put("reservePage", new ReserveCommand());
-        actionMap.put("acceptReserve", new AcceptReserveCommand());
         actionMap.put("viewUsers", new ViewUsersCommand());
     }
 
