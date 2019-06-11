@@ -1,11 +1,8 @@
 package com.epam.dao.impdao;
 
 import com.epam.dao.AbstractDao;
-import com.epam.entity.Table;
 import com.epam.entity.User;
 import com.epam.entity.type.Role;
-import com.epam.entity.type.TableStatus;
-import com.epam.entity.type.TableType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,8 +34,6 @@ public class UserDao extends AbstractDao<User> {
 
     private PreparedStatement preparedStatement = null;
 
-    private Table table;
-
     public UserDao(Connection connection) {
         super(connection);
     }
@@ -62,11 +57,6 @@ public class UserDao extends AbstractDao<User> {
                     user.setRole(Role.ADMIN);
                 }
                 user.setPhoneNumber(resultSet.getString(SEVENTH));
-
-                table = fillupTable(resultSet.getInt(EIGHTH), resultSet.getInt(NINTH), resultSet.getString(TENTH),
-                                 resultSet.getString(ELEVENTH), resultSet.getInt(TWELFTH));
-
-                user.setTable(table);
 
                 userList.add(user);
             }
@@ -97,11 +87,6 @@ public class UserDao extends AbstractDao<User> {
                     user.setRole(Role.ADMIN);
                 }
                 user.setPhoneNumber(resultSet.getString(SEVENTH));
-
-                table = fillupTable(resultSet.getInt(EIGHTH), resultSet.getInt(NINTH), resultSet.getString(TENTH),
-                                 resultSet.getString(ELEVENTH), resultSet.getInt(TWELFTH));
-
-                user.setTable(table);
             }
         } finally {
             closePreparedStatement(preparedStatement);
@@ -132,7 +117,6 @@ public class UserDao extends AbstractDao<User> {
         preparedStatement.setString(FIRST, user.getEmail());
         preparedStatement.setString(SECOND, user.getPhoneNumber());
         preparedStatement.setString(THIRD, user.getPassword());
-        preparedStatement.setLong(FOURTH, user.getTable().getId());
         preparedStatement.setString(FIFTH, user.getLogin());
         int result;
 
@@ -184,24 +168,5 @@ public class UserDao extends AbstractDao<User> {
         }
 
         return result;
-    }
-
-    private Table fillupTable(Object...args) {
-        Table table = new Table();
-        table.setId(Integer.parseInt(args[0].toString()));
-        table.setSeatsNumber(Integer.parseInt(args[1].toString()));
-        if (args[2].toString().equalsIgnoreCase("common")) {
-            table.setValue(TableType.COMMON);
-        } else {
-            table.setValue(TableType.VIP);
-        }
-        if (args[3].toString().equalsIgnoreCase("active")) {
-            table.setStatus(TableStatus.ACTIVE);
-        } else {
-            table.setStatus(TableStatus.BOOKED);
-        }
-        table.setReservationTime(Integer.parseInt(args[4].toString()));
-
-        return table;
     }
 }

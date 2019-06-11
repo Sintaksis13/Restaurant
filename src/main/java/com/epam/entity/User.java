@@ -9,7 +9,6 @@ public class User extends BaseEntity<User> {
     private String password;
     private String email;
     private String phoneNumber;
-    private Table table;
     private Role role;
 
     public String getLogin() {
@@ -44,14 +43,6 @@ public class User extends BaseEntity<User> {
         this.phoneNumber = phoneNumber;
     }
 
-    public Table getTable() {
-        return table;
-    }
-
-    public void setTable(Table table) {
-        this.table = table;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -73,6 +64,6 @@ public class User extends BaseEntity<User> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, email, phoneNumber, table, role);
+        return Objects.hash(login, password, email, phoneNumber, role);
     }
 }
