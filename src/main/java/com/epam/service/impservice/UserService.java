@@ -16,13 +16,11 @@ import static com.epam.constants.NumericConstants.UNCHANGED_ROWS;
 public class UserService extends AbstractService<User> {
     private static final Logger LOG = LogManager.getLogger(UserService.class);
 
-    private Connection connection = AbstractService.getConnectionPool().getConnection();
-
     public UserService() {
         super();
     }
 
-    private UserDao userDao = new UserDao(connection);
+    private UserDao userDao = new UserDao(null);
 
     @Override
     public List<User> getAll() {
