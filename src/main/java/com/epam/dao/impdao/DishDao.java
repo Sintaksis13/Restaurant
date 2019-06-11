@@ -130,6 +130,6 @@ public class DishDao extends HibernateAbstractDao<Dish> implements Dao<Dish> {
 
         dish.setId(oldDish.getId());
         LOG.info("Dish={} was updated. New data={}", oldDish, dish);
-        return oldDish;
+        return dish;
     }
 }
