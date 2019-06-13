@@ -1,12 +1,11 @@
-package com.epam.service.impservice;
+package com.epam.service.implementation;
 
-import com.epam.dao.impdao.UserDao;
+import com.epam.dao.implementation.UserDao;
 import com.epam.entity.User;
 import com.epam.service.AbstractService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 

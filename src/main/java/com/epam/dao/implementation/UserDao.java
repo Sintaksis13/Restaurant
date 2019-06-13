@@ -1,4 +1,4 @@
-package com.epam.dao.impdao;
+package com.epam.dao.implementation;
 
 import com.epam.dao.AbstractDao;
 import com.epam.entity.User;

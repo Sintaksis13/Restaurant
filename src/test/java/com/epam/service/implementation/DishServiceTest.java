@@ -1,7 +1,7 @@
-package com.epam.service.impservice;
+package com.epam.service.implementation;
 
 import com.epam.dao.result.DaoResult;
-import com.epam.dao.impdao.DishDao;
+import com.epam.dao.implementation.DishDao;
 import com.epam.entity.Dish;
 import com.epam.exception.DaoException;
 import com.epam.service.HibernateService;

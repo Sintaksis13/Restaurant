@@ -1,4 +1,4 @@
-package com.epam.dao.idao;
+package com.epam.dao.interfaces;
 
 import com.epam.entity.Dish;
 import com.epam.exception.DaoException;

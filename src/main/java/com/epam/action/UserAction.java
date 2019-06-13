@@ -1,7 +1,7 @@
 package com.epam.action;
 
 import com.epam.entity.User;
-import com.epam.service.impservice.UserService;
+import com.epam.service.implementation.UserService;
 
 import java.util.List;
 

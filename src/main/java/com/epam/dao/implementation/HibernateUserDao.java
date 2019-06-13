@@ -1,6 +1,6 @@
-package com.epam.dao.impdao;
+package com.epam.dao.implementation;
 
-import com.epam.dao.idao.Dao;
+import com.epam.dao.interfaces.Dao;
 import com.epam.entity.Dish;
 import com.epam.entity.User;
 import com.epam.exception.DaoException;

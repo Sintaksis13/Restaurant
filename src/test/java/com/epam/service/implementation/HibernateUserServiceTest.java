@@ -1,4 +1,4 @@
-package com.epam.service.impservice;
+package com.epam.service.implementation;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.epam.dao.idao;
+package com.epam.dao.interfaces;
 
 import java.sql.SQLException;
 import java.util.List;

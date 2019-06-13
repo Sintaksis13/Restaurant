@@ -1,6 +1,6 @@
 package com.epam.dao;
 
-import com.epam.dao.idao.IDao;
+import com.epam.dao.interfaces.IDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

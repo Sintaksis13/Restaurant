@@ -1,4 +1,4 @@
-package com.epam.service.impservice;
+package com.epam.service.implementation;
 
 import com.epam.dao.result.DaoResult;
 import com.epam.entity.Dish;
