@@ -1,5 +1,6 @@
 package com.epam.service.implementation;
 
+import com.epam.dao.interfaces.Dao;
 import com.epam.dao.result.DaoResult;
 import com.epam.entity.Dish;
 import com.epam.entity.User;
@@ -13,6 +14,12 @@ import java.util.List;
 @Service("userService")
 @Transactional
 public class HibernateUserService implements HibernateService<User> {
+    private final Dao<User> userDao;
+
+    public HibernateUserService(Dao<User> userDao) {
+        this.userDao = userDao;
+    }
+
     @Override
     public Pair<DaoResult, User> save(User object) {
         return null;
@@ -23,18 +30,16 @@ public class HibernateUserService implements HibernateService<User> {
         return null;
     }
 
-    @Override
-    public Pair<DaoResult, User> deleteByName(String name) {
+    public Pair<DaoResult, User> deleteByLogin(String login) {
+        return null;
+    }
+
+    public Pair<DaoResult, User> findByLogin(String login) {
         return null;
     }
 
     @Override
-    public Pair<DaoResult, User> findByName(String name) {
-        return null;
-    }
-
-    @Override
-    public Pair<DaoResult, Dish> update(String name, User object) {
+    public Pair<DaoResult, User> update(String name, User object) {
         return null;
     }
 }

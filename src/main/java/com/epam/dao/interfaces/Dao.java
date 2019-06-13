@@ -1,18 +1,13 @@
 package com.epam.dao.interfaces;
 
-import com.epam.entity.Dish;
 import com.epam.exception.DaoException;
 
 import java.util.List;
 
 public interface Dao<T> {
-    Dish save(T object) throws DaoException;
+    T save(T object) throws DaoException;
 
     List<T> findAll() throws DaoException;
 
-    T deleteByName(String name) throws DaoException;
-
-    T findByName(String name) throws DaoException;
-
-    Dish update(String name, T dish) throws DaoException;
+    T update(String name, T dish) throws DaoException;
 }

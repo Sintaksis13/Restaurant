@@ -3,6 +3,7 @@ package com.epam.command.impcommand;
 import com.epam.action.UserAction;
 import com.epam.command.ActionCommand;
 import com.epam.entity.User;
+import com.epam.entity.type.Role;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -45,14 +46,7 @@ public class RegisterCommand implements ActionCommand {
     }
 
     private User fillUpUser(String login, String password, String email, String phoneNumber) {
-        User user = new User();
-
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setPhoneNumber(phoneNumber);
-
-        return user;
+        return new User(login, password, email, phoneNumber, Role.USER);
     }
 
     private void sendFailMessage(HttpServletRequest request, HttpServletResponse response)

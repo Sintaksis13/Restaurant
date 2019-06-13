@@ -61,7 +61,6 @@ public class DishDao extends HibernateAbstractDao<Dish> implements Dao<Dish> {
         return dishes;
     }
 
-    @Override
     public Dish deleteByName(String dishName) throws DaoException {
         Dish dishByName = findByName(dishName);
         if (dishByName == null) {
@@ -80,7 +79,6 @@ public class DishDao extends HibernateAbstractDao<Dish> implements Dao<Dish> {
         return dishByName;
     }
 
-    @Override
     public Dish findByName(String dishName) throws DaoException {
         Dish dish;
         try {

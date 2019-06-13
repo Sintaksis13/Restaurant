@@ -1,10 +1,9 @@
 package com.epam.service.implementation;
 
-import com.epam.dao.result.DaoResult;
 import com.epam.dao.implementation.DishDao;
+import com.epam.dao.result.DaoResult;
 import com.epam.entity.Dish;
 import com.epam.exception.DaoException;
-import com.epam.service.HibernateService;
 import javafx.util.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +24,7 @@ public class DishServiceTest {
     @Mock
     private DishDao dishDao;
 
-    private HibernateService<Dish> dishService;
+    private DishService dishService;
     private final Dish testDish = new Dish("test", "test", 100.0);
 
     @Test

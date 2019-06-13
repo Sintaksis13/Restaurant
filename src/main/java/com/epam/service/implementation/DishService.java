@@ -59,7 +59,6 @@ public class DishService implements HibernateService<Dish> {
         return new Pair<>(result, dishes);
     }
 
-    @Override
     public Pair<DaoResult, Dish> deleteByName(String dishName) {
         DaoResult result;
         Dish dish = null;
@@ -76,7 +75,6 @@ public class DishService implements HibernateService<Dish> {
         return new Pair<>(result, dish);
     }
 
-    @Override
     public Pair<DaoResult, Dish> findByName(String dishName) {
         DaoResult result;
         Dish dish = null;

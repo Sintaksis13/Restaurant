@@ -20,7 +20,7 @@ public interface ActionCommand {
     void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     static User fetchUser(Cookie[] cookies) {
-        User user = new User();
+        User user = null;
 
         try {
             user = new Validator().checkCookie(cookies);

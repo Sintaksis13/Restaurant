@@ -3,7 +3,7 @@ package com.epam.controller;
 import com.epam.dao.result.DaoResult;
 import com.epam.entity.Dish;
 import com.epam.entity.response.ResponseEntity;
-import com.epam.service.HibernateService;
+import com.epam.service.implementation.DishService;
 import javafx.util.Pair;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +11,9 @@ import java.util.List;
 
 @RestController
 public class DishController {
-    private final HibernateService<Dish> dishService;
+    private final DishService dishService;
 
-    public DishController(HibernateService<Dish> dishService) {
+    public DishController(DishService dishService) {
         this.dishService = dishService;
     }
 

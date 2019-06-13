@@ -46,17 +46,13 @@ public class UserDao extends AbstractDao<User> {
 
         try(ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt(FIRST));
-                user.setLogin(resultSet.getString(SECOND));
-                user.setPassword(resultSet.getString(THIRD));
-                user.setEmail(resultSet.getString(FOURTH));
-                if (resultSet.getString(SIXTH).equalsIgnoreCase(Role.USER.toString())) {
-                    user.setRole(Role.USER);
-                } else {
-                    user.setRole(Role.ADMIN);
-                }
-                user.setPhoneNumber(resultSet.getString(SEVENTH));
+                int userId = resultSet.getInt(FIRST);
+                String userLogin = resultSet.getString(SECOND);
+                String userPassword = resultSet.getString(THIRD);
+                String userEmail = resultSet.getString(FOURTH);
+                Role userRole = resultSet.getString(FIFTH).equalsIgnoreCase(Role.USER.toString()) ? Role.USER : Role.ADMIN;
+                String userNumber = resultSet.getString(SEVENTH);
+                user = new User(userId, userLogin, userPassword, userEmail, userNumber, userRole);
 
                 userList.add(user);
             }
@@ -75,18 +71,13 @@ public class UserDao extends AbstractDao<User> {
 
         try(ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt(FIRST));
-                user.setLogin(resultSet.getString(SECOND));
-                user.setPassword(resultSet.getString(THIRD));
-                user.setEmail(resultSet.getString(FOURTH));
-
-                if (resultSet.getString(SIXTH).equalsIgnoreCase(Role.USER.toString())) {
-                    user.setRole(Role.USER);
-                } else {
-                    user.setRole(Role.ADMIN);
-                }
-                user.setPhoneNumber(resultSet.getString(SEVENTH));
+                int userId = resultSet.getInt(FIRST);
+                String userLogin = resultSet.getString(SECOND);
+                String userPassword = resultSet.getString(THIRD);
+                String userEmail = resultSet.getString(FOURTH);
+                Role userRole = resultSet.getString(FIFTH).equalsIgnoreCase(Role.USER.toString()) ? Role.USER : Role.ADMIN;
+                String userNumber = resultSet.getString(SEVENTH);
+                user = new User(userId, userLogin, userPassword, userEmail, userNumber, userRole);
             }
         } finally {
             closePreparedStatement(preparedStatement);
@@ -102,8 +93,13 @@ public class UserDao extends AbstractDao<User> {
 
         try(ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                user = new User();
-                user.setEmail(resultSet.getString(FOURTH));
+                int userId = resultSet.getInt(FIRST);
+                String userLogin = resultSet.getString(SECOND);
+                String userPassword = resultSet.getString(THIRD);
+                String userEmail = resultSet.getString(FOURTH);
+                Role userRole = resultSet.getString(FIFTH).equalsIgnoreCase(Role.USER.toString()) ? Role.USER : Role.ADMIN;
+                String userNumber = resultSet.getString(SEVENTH);
+                user = new User(userId, userLogin, userPassword, userEmail, userNumber, userRole);
             }
         } finally {
             closePreparedStatement(preparedStatement);

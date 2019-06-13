@@ -11,6 +11,23 @@ public class User extends BaseEntity<User> {
     private String phoneNumber;
     private Role role;
 
+    public User(String login, String password, String email, String phoneNumber, Role role) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
+    public User(long id, String login, String password, String email, String phoneNumber, Role role) {
+        super(id);
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
     public String getLogin() {
         return login;
     }

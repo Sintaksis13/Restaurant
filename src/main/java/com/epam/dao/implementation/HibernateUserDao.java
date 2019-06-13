@@ -1,7 +1,6 @@
 package com.epam.dao.implementation;
 
 import com.epam.dao.interfaces.Dao;
-import com.epam.entity.Dish;
 import com.epam.entity.User;
 import com.epam.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +15,7 @@ public class HibernateUserDao implements Dao<User> {
     private static final Class<User> CLASS = User.class;
 
     @Override
-    public Dish save(User object) throws DaoException {
+    public User save(User object) throws DaoException {
         return null;
     }
 
@@ -25,18 +24,16 @@ public class HibernateUserDao implements Dao<User> {
         return null;
     }
 
-    @Override
-    public User deleteByName(String name) throws DaoException {
+    public User deleteByLogin(String login) throws DaoException {
+        return null;
+    }
+
+    public User findByLogin(String login) throws DaoException {
         return null;
     }
 
     @Override
-    public User findByName(String name) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public Dish update(String name, User dish) throws DaoException {
+    public User update(String name, User dish) throws DaoException {
         return null;
     }
 }

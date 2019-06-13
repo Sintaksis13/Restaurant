@@ -12,9 +12,5 @@ public interface HibernateService<T extends BaseEntity> {
 
     Pair<DaoResult, List<T>> findAll();
 
-    Pair<DaoResult, T> deleteByName(String name);
-
-    Pair<DaoResult, T> findByName(String name);
-
-    Pair<DaoResult, Dish> update(String name, T object);
+    Pair<DaoResult, T> update(String name, T object);
 }
