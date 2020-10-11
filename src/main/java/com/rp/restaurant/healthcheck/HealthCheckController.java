@@ -1,4 +1,4 @@
-package com.rp.healthcheck;
+package com.rp.restaurant.healthcheck;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
