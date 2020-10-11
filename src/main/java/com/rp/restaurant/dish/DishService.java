@@ -19,4 +19,12 @@ public class DishService {
         return StreamSupport.stream(dishes.spliterator(), true)
                 .collect(Collectors.toList());
     }
+
+    public Dish createDish(Dish dish) {
+        return repository.save(dish);
+    }
+
+    public void deleteAll() {
+        repository.deleteAll();
+    }
 }
